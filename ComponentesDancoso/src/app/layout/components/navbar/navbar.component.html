@@ -1,11 +1,11 @@
-<ul class="nav flex-column" data-bs-theme="dark">
+<ul class="nav flex-column">
     <li class="nav-item">
-        <a class="nav-link active link-dark" aria-current="page" href="#about">About</a>
+        <a [class.shadow-sm]="getLocationHash(hashs.About)" class="nav-link link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover" href="{{hashs.About}}">About</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link link-dark" href="#projects">Projects</a>
+        <a [class.shadow-sm]="getLocationHash(hashs.Projects)" class="nav-link link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover" href="{{hashs.Projects}}">Projects</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link link-dark" href="#contact">Contact</a>
+        <a [class.shadow-sm]="getLocationHash(hashs.Contact)" class="nav-link link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover" href="{{hashs.Contact}}">Contact</a>
     </li>
 </ul>
