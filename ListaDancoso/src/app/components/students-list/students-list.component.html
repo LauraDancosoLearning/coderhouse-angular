@@ -1,0 +1,25 @@
+
+<h1>Students List</h1>
+<table *ngIf="students.length>0; else noStudentsLoaded" class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th *ngFor="let column of ['Name','LastName', 'DNI', 'AVG Mark']" scope="col">{{column}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of students; let i= index;">
+        <th scope="row">{{i+1}}</th>
+        <td>{{student.name | titlecase }}</td>
+        <td>{{student.lastName | titlecase }}</td>
+        <td>{{student.dni | number:'':'es'}}</td>
+        <td [gradeState]="student.avgMark">{{student.avgMark}}</td>
+      </tr>
+    </tbody>
+</table>
+<ng-template #noStudentsLoaded>
+  <div class="alert alert-dark" role="alert">
+    No students loaded yet!
+  </div>
+  <button type="button" class="btn btn-dark" (click)="loadStudents()">Load students</button>
+</ng-template>
