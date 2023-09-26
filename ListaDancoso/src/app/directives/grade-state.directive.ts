@@ -5,7 +5,7 @@ import { GradeStateEnum } from '../models/gradeStates.enum';
   selector: '[gradeState]',
 })
 export class GradeStateDirective implements AfterViewInit {
-  @Input() gradeState!: number | null | undefined;
+  @Input({required: true}) mark!: number | null | undefined;
 
   constructor(public eleRef: ElementRef) {}
 
@@ -13,13 +13,13 @@ export class GradeStateDirective implements AfterViewInit {
     let bgClass;
     let label;
 
-    if ((this.gradeState ?? -1) >= GradeStateEnum.Pass) {
+    if ((this.mark ?? -1) >= GradeStateEnum.Pass) {
       bgClass = 'success';
       label = GradeStateEnum[GradeStateEnum.Pass];
-    } else if ((this.gradeState ?? -1) >= GradeStateEnum.LowPass) {
+    } else if ((this.mark ?? -1) >= GradeStateEnum.LowPass) {
       bgClass = 'warning';
       label = GradeStateEnum[GradeStateEnum.LowPass];
-    } else if ((this.gradeState ?? -1) >= GradeStateEnum.Fail) {
+    } else if ((this.mark ?? -1) >= GradeStateEnum.Fail) {
       bgClass = 'danger';
       label = GradeStateEnum[GradeStateEnum.Fail];
     } else {

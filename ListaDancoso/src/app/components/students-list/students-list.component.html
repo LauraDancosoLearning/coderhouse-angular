@@ -13,7 +13,7 @@
         <td>{{student.name | titlecase }}</td>
         <td>{{student.lastName | titlecase }}</td>
         <td>{{student.dni | number:'':'es'}}</td>
-        <td [gradeState]="student.avgMark">{{student.avgMark}}</td>
+        <td gradeState [mark]="student.avgMark">{{student.avgMark}}</td>
       </tr>
     </tbody>
 </table>
