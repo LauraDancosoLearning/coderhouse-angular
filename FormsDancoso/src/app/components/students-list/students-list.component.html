@@ -1,10 +1,10 @@
-
-<h1>Students List</h1>
+<h1 class="m-2">Students List</h1>
+<add-student-modal (studentAdded)="onStudentAdded($event)"></add-student-modal>
 <table *ngIf="students.length>0; else noStudentsLoaded" class="table">
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th *ngFor="let column of ['Name','LastName', 'DNI', 'AVG Mark']" scope="col">{{column}}</th>
+        <th *ngFor="let column of ['Name','LastName', 'Email','DNI', 'AVG Mark']" scope="col">{{column}}</th>
       </tr>
     </thead>
     <tbody>
@@ -12,6 +12,7 @@
         <th scope="row">{{i+1}}</th>
         <td>{{student.name | titlecase }}</td>
         <td>{{student.lastName | titlecase }}</td>
+        <td>{{student.email}}</td>
         <td>{{student.dni | number:'':'es'}}</td>
         <td gradeState [mark]="student.avgMark">{{student.avgMark}}</td>
       </tr>
@@ -21,5 +22,4 @@
   <div class="alert alert-dark" role="alert">
     No students loaded yet!
   </div>
-  <button type="button" class="btn btn-dark" (click)="loadStudents()">Load students</button>
 </ng-template>

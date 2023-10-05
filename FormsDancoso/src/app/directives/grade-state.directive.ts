@@ -27,7 +27,6 @@ export class GradeStateDirective implements AfterViewInit {
       label = 'Absent';
     }
 
-    this.eleRef.nativeElement.innerHTML += `<span class="badge bg-${bgClass}">${label.toUpperCase()}</span>`;
-    this.eleRef.nativeElement.style = 'display:flex;gap:10px;';
+    this.eleRef.nativeElement.innerHTML += `<span class="badge bg-${bgClass} ${this.eleRef.nativeElement.innerHTML.length>0 ? 'ms-2' : ''}">${label.toUpperCase()}</span>`;
   }
 }

@@ -1,0 +1,40 @@
+.error-message {
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: .7rem;
+    color: #dc3545;
+}
+.form-control-invalid{
+    border-color: #dc3545;
+    padding-right: calc(1.5em + 0.75rem);
+    background-image: url("https://cdn0.iconfinder.com/data/icons/shift-free/32/Error-512.png");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+    &:focus{
+        border-color: #dc3545;
+        box-shadow: 0 0 0 0.25rem rgba(220,53,69,.25);
+    }
+}
+
+#dni::-webkit-outer-spin-button,
+#dni::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+#dni{
+    -moz-appearance:textfield; /* Firefox */
+}
+
+.form-label, .form-control{
+    font-size: 0.8rem;
+}
+
+form{
+    .row{
+        min-height: 90px;
+    }
+}
+
