@@ -1,0 +1,8 @@
+<mat-toolbar color="primary">
+  <span class="fill-remaining-space">
+    <button mat-icon-button (click)="menuTriggered.emit()">
+      <mat-icon>{{ menuOpened ? "menu_open" : "menu" }} </mat-icon>
+    </button>
+  </span>
+  <span class="fill-remaining-space">{{ title }}</span>
+</mat-toolbar>

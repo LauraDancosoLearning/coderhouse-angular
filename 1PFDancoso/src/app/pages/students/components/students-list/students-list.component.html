@@ -1,0 +1,34 @@
+<table mat-table [dataSource]="studentsService.getStudents() "*ngIf="studentsService.getStudents().length>0; else noStudentsLoaded">
+  <ng-container matColumnDef="fullName">
+    <th mat-header-cell *matHeaderCellDef>FullName</th>
+    <td mat-cell *matCellDef="let student">{{student | fullname}}</td>
+  </ng-container>
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef>Email</th>
+    <td mat-cell *matCellDef="let student">{{student.email}}</td>
+  </ng-container>
+  <ng-container matColumnDef="dni">
+    <th mat-header-cell *matHeaderCellDef>DNI</th>
+    <td mat-cell *matCellDef="let student">{{student.dni | number:'':'es'}}</td>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let student">
+      <button mat-mini-fab color="primary" (click)="openEditStudentModal(student)" class="mx-1">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-mini-fab color="warn" class="mx-1" (click)="this.studentsService.deleteStudent(student.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<ng-template #noStudentsLoaded>
+  <mat-card color="accent">
+    <mat-card-content> No students loaded yet!</mat-card-content>
+  </mat-card>
+</ng-template>

@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>{{ student?.id ? "Edit" : "Add" }} student</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="form" class="container">
+    <div class="row">
+      <mat-form-field class="col mb-1">
+        <mat-label>First name</mat-label>
+        <input formControlName="name" matInput required />
+        <mat-error *ngFor="let error of form.get('name')?.errors | keyvalue">
+          {{ getErrorMessage(error.key, error.value) }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="col mb-1">
+        <mat-label>Last name</mat-label>
+        <input formControlName="lastName" matInput required />
+        <mat-error *ngFor="let error of form.get('lasName')?.errors | keyvalue">
+          {{ getErrorMessage(error.key, error.value) }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field class="col-12 mb-1">
+        <mat-label>Email</mat-label>
+        <input type="email" formControlName="email" matInput required />
+        <mat-error *ngFor="let error of form.get('email')?.errors | keyvalue">
+          {{ getErrorMessage(error.key, error.value) }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field class="col mb-1">
+        <mat-label>DNI</mat-label>
+        <input id="dni" type="number" matInput required formControlName="dni" />
+        <mat-error *ngFor="let error of form.get('dni')?.errors | keyvalue">
+          {{ getErrorMessage(error.key, error.value) }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button (click)="addStudent()" [disabled]="form.invalid || form.untouched" mat-button>
+    Submit
+  </button>
+</mat-dialog-actions>
