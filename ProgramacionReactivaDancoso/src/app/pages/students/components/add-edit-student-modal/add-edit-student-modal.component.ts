@@ -51,11 +51,14 @@ export class AddEditStudentModalComponent {
 
     if (this.student) {
       this.form.patchValue(this.student);
+      this.student?.marks.forEach((m,i)=> {
+        let fc = this.getFormControlArray(i);
+        fc ? fc.patchValue(m) : this.addMarkFormControl(m)       
+      })
     }
   }
 
-  addStudent() {
-    console.log(this.form.value)
+  onSubmit() {
     this.matDialogRef.close(this.form.value);
     this.form.reset();
   }
@@ -96,8 +99,8 @@ export class AddEditStudentModalComponent {
     return (this.form.get('marks') as FormArray).at(index) as FormControl;
   }
 
-  addMarkFormControl(){
-    (this.form.get('marks') as FormArray).push(this.formBuilder.control(0, [
+  addMarkFormControl(mark: number = 0){
+    (this.form.get('marks') as FormArray).push(this.formBuilder.control(mark, [
       Validators.min(0),
       Validators.max(10),
       Validators.required,

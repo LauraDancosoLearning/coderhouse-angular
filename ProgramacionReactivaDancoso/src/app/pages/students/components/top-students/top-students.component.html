@@ -1,0 +1,8 @@
+<ng-container *ngIf="topStudentsName$ | async as students">
+  <button mat-raised-button color="accent" [matMenuTriggerFor]="top" *ngIf="students.length>0">
+    TOP {{ topNumber }} STUDENTS
+  </button>
+  <mat-menu #top="matMenu">
+    <div *ngFor="let student of students" mat-menu-item>{{ student }}</div>
+  </mat-menu>
+</ng-container>

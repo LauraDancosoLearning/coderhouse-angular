@@ -16,10 +16,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule} from '@angular/material/table';
 
 import { StudentsComponent } from './components/students/students.component';
-import { TopStudentsModalComponent } from './components/top-students-modal/top-students-modal.component';
+import { TopStudentsComponent } from './components/top-students/top-students.component';
+import { MatMenuModule } from '@angular/material/menu';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
-  declarations: [StudentsListComponent, AddEditStudentModalComponent, StudentsComponent, TopStudentsModalComponent],
+  declarations: [StudentsListComponent, AddEditStudentModalComponent, StudentsComponent, TopStudentsComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -32,7 +34,9 @@ import { TopStudentsModalComponent } from './components/top-students-modal/top-s
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
-    MatTableModule
+    MatTableModule,
+    MatMenuModule,
+    MatTooltipModule
   ],
   exports: [StudentsListComponent, AddEditStudentModalComponent, StudentsComponent],
 })

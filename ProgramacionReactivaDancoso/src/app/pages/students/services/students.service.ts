@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { STUDENTS_MOCKED } from 'src/app/data/mockData';
 import { Student } from 'src/app/pages/students/models/student.model';
 
 @Injectable({
@@ -14,16 +15,10 @@ export class StudentsService {
   public students$: BehaviorSubject<Student[]>;
 
   constructor(){
-    this.students$ = new BehaviorSubject<Student[]>(this.studentsList);
-
     //For testing porpuses
-    this.addStudent({
-      name:'pepe',
-      lastName: 'ramirez',
-      dni: 32873297,
-      email: 'ljdfa@gmail.com',
-      marks: [5]
-    })
+    this.studentsList = STUDENTS_MOCKED;
+
+    this.students$ = new BehaviorSubject<Student[]>(this.studentsList);    
   }
 
   addStudent(student: Student){
@@ -39,14 +34,21 @@ export class StudentsService {
   }
   
   updateStudent(studentToUpdate: Student){
-    console.log(studentToUpdate)
     let student = this.studentsList.find(s=> s.id === studentToUpdate.id);
+    
     const studentIndex = this.studentsList.findIndex((s=> s.id === studentToUpdate.id));
     if(studentIndex != -1){
       this.studentsList[studentIndex] = { ...student, ...studentToUpdate};
       this.students$.next(this.studentsList);
       this.studentsUpdated.emit();
     }
+  }
+
+  getMarksAvg(marks: number[]){
+    return marks?.reduce(
+      (accumulator, currentValue) => accumulator + currentValue,
+      0
+    ) / marks.length;
   }
   
 }

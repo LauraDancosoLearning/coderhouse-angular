@@ -16,7 +16,7 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class StudentsListComponent implements OnInit, OnDestroy {
 
-  displayedColumns: string[] = ['fullName', 'email','dni', 'actions'];
+  displayedColumns: string[] = ['fullName', 'email','dni', 'marks','actions'];
   unsubscribe: Subject<void> = new Subject();
   
   @ViewChild(MatTable) public table?: MatTable<Student>;
