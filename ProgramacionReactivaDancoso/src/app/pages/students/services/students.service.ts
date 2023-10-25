@@ -12,24 +12,26 @@ export class StudentsService {
   private studentsUpdated: EventEmitter<void> = new EventEmitter();
   public studentsUpdated$: Observable<void> = this.studentsUpdated.asObservable();
   
-  public students$: BehaviorSubject<Student[]>;
+  public students: BehaviorSubject<Student[]>;
+  public students$:Observable<Student[]> ;
 
   constructor(){
     //For testing porpuses
     this.studentsList = STUDENTS_MOCKED;
 
-    this.students$ = new BehaviorSubject<Student[]>(this.studentsList);    
+    this.students = new BehaviorSubject<Student[]>(this.studentsList);
+    this.students$ = this.students.asObservable();
   }
 
   addStudent(student: Student){
     this.studentsList.push({...student, id: new Date().getTime()});
-    this.students$.next(this.studentsList);
+    this.students.next(this.studentsList);
     this.studentsUpdated.emit();
   }
 
   deleteStudent(id: number){
     this.studentsList = this.studentsList.filter(s=>s.id !== id);    
-    this.students$.next(this.studentsList);
+    this.students.next(this.studentsList);
     this.studentsUpdated.emit();
   }
   
@@ -39,7 +41,7 @@ export class StudentsService {
     const studentIndex = this.studentsList.findIndex((s=> s.id === studentToUpdate.id));
     if(studentIndex != -1){
       this.studentsList[studentIndex] = { ...student, ...studentToUpdate};
-      this.students$.next(this.studentsList);
+      this.students.next(this.studentsList);
       this.studentsUpdated.emit();
     }
   }
