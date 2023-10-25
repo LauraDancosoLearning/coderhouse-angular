@@ -16,9 +16,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule} from '@angular/material/table';
 
 import { StudentsComponent } from './components/students/students.component';
+import { TopStudentsModalComponent } from './components/top-students-modal/top-students-modal.component';
 
 @NgModule({
-  declarations: [StudentsListComponent, AddEditStudentModalComponent, StudentsComponent],
+  declarations: [StudentsListComponent, AddEditStudentModalComponent, StudentsComponent, TopStudentsModalComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

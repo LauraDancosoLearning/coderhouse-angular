@@ -4,7 +4,7 @@
     <div class="row">
       <mat-form-field class="col mb-1">
         <mat-label>First name</mat-label>
-        <input formControlName="name" matInput required />
+        <input [placeholder]="(randomNamePlaceholder | async) || 'Name'" formControlName="name" matInput required />
         <mat-error *ngFor="let error of form.get('name')?.errors | keyvalue">
           {{ getErrorMessage(error.key, error.value) }}
         </mat-error>
@@ -35,11 +35,32 @@
         </mat-error>
       </mat-form-field>
     </div>
+    <div class="row">
+      <div class="col-6 mb-5 d-flex align-items-center" *ngFor="let mark of getFormArrayMarks().controls let i = index">
+        <mat-form-field formArrayName="marks">
+          <mat-label>Mark {{i+1}}</mat-label>
+          <input matInput type="number" step=".5" class="form-control" placeholder="Mark"
+            [formControl]="getFormControlArray(i)" />
+          <mat-error *ngFor="let error of getFormControlArray(i)?.errors | keyvalue">
+            {{getErrorMessage(error.key, error.value)}}
+          </mat-error>
+        </mat-form-field>
+        <button mat-icon-button *ngIf="getFormArrayMarks().value.length>1" color="warn" aria-label="delete Mark"
+          (click)="deleteMarkFormControl(i)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div *ngIf="getFormArrayMarks().value.length<4">
+      <button mat-button color="primary" (click)="addMarkFormControl()">
+        add mark
+      </button>
+    </div>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button (click)="addStudent()" [disabled]="form.invalid || form.untouched" mat-button>
+  <button (click)="addStudent()" color="primary" [disabled]="form.invalid || form.untouched" mat-button>
     Submit
   </button>
 </mat-dialog-actions>

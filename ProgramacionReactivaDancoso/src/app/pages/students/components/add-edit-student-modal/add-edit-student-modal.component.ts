@@ -1,10 +1,11 @@
 import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Student } from 'src/app/pages/students/models/student.model';
 import { gmailValidator } from 'src/app/shared/validators/gmailValidator';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { RandomService } from '../../../../shared/services/random.service';
 
 @Component({
   selector: 'add-edit-student-modal',
@@ -15,11 +16,16 @@ export class AddEditStudentModalComponent {
   subscriptions: Subscription[] = [];
   form: FormGroup;
 
+  randomNamePlaceholder: Promise<string>;
+
   constructor(
+    public randomService: RandomService,
     public formBuilder: FormBuilder,
     private matDialogRef: MatDialogRef<AddEditStudentModalComponent>,
     @Inject(MAT_DIALOG_DATA) public student?: Student
   ) {
+    this.randomNamePlaceholder = this.randomService.getRandomName();
+
     this.form = formBuilder.group({
       id: formBuilder.control(null),
       name: formBuilder.control(null, [Validators.required]),
@@ -34,6 +40,13 @@ export class AddEditStudentModalComponent {
         Validators.minLength(0),
         Validators.min(1),
       ]),
+      marks: formBuilder.array([
+        formBuilder.control(0, [
+          Validators.min(0),
+          Validators.max(10),
+          Validators.required,
+        ])
+      ])
     });
 
     if (this.student) {
@@ -42,6 +55,7 @@ export class AddEditStudentModalComponent {
   }
 
   addStudent() {
+    console.log(this.form.value)
     this.matDialogRef.close(this.form.value);
     this.form.reset();
   }
@@ -72,5 +86,25 @@ export class AddEditStudentModalComponent {
         break;
     }
     return message;
+  }
+
+  getFormArrayMarks(){
+    return this.form.get('marks') as FormArray
+  }
+
+  getFormControlArray(index: number){
+    return (this.form.get('marks') as FormArray).at(index) as FormControl;
+  }
+
+  addMarkFormControl(){
+    (this.form.get('marks') as FormArray).push(this.formBuilder.control(0, [
+      Validators.min(0),
+      Validators.max(10),
+      Validators.required,
+    ]))
+  }
+
+  deleteMarkFormControl(index: number){
+    (this.form.get('marks') as FormArray).removeAt(index);
   }
 }

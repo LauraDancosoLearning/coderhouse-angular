@@ -4,4 +4,5 @@ export interface Student{
     lastName: string,
     email: string,
     dni: number,
+    marks: number[]
 }
