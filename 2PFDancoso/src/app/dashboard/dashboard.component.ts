@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-  title = 'ProgramacionReactiva';
+  title = '2PF';
   showSidebar = true;
 }
