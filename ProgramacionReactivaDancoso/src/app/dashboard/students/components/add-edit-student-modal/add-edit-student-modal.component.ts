@@ -1,11 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { Student } from 'src/app/pages/students/models/student.model';
-import { gmailValidator } from 'src/app/shared/validators/gmailValidator';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { RandomService } from '../../../../shared/services/random.service';
+import { Student } from '../../models/student.model';
+import { gmailValidator } from '../../../../shared/validators/gmailValidator';
 
 @Component({
   selector: 'add-edit-student-modal',
@@ -111,3 +111,4 @@ export class AddEditStudentModalComponent {
     (this.form.get('marks') as FormArray).removeAt(index);
   }
 }
+

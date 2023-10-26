@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Student } from '../../pages/students/models/student.model';
 import { TitleCasePipe } from '@angular/common';
+import { Student } from '../../dashboard/students/models/student.model';
 
 @Pipe({
   name: 'fullname'

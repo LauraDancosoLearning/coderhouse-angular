@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { STUDENTS_MOCKED } from 'src/app/data/mockData';
-import { Student } from 'src/app/pages/students/models/student.model';
+import { Student } from '../models/student.model';
+import { STUDENTS_MOCKED } from '../../../data/mockData';
 
 @Injectable({
   providedIn: 'root'

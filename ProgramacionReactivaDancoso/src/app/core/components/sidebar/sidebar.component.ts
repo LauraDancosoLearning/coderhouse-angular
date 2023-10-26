@@ -8,11 +8,11 @@ import { Component } from '@angular/core';
 export class SidebarComponent {
   routes: {link: string, name:string} [] = [
     {
-      link: '',
+      link: '/dashboard',
       name: 'Home'
     },
     {
-      link: '/students',
+      link: '/dashboard/students',
       name: 'Students'
     }
   ]

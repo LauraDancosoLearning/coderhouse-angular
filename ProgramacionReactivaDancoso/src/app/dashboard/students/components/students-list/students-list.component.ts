@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Student } from 'src/app/pages/students/models/student.model';
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { StudentsService } from '../../services/students.service';
@@ -8,6 +7,7 @@ import {MatTable} from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditStudentModalComponent } from '../add-edit-student-modal/add-edit-student-modal.component';
 import { Subject, takeUntil } from 'rxjs';
+import { Student } from '../../models/student.model';
 
 @Component({
   selector: 'students-list',

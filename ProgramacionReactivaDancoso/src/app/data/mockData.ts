@@ -1,4 +1,4 @@
-import { Student } from '../pages/students/models/student.model';
+import { Student } from "../dashboard/students/models/student.model";
 
 export const STUDENTS_MOCKED: Student[] = [
   {
