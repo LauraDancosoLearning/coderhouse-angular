@@ -1,33 +1,37 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StudentsListComponent } from './components/students-list/students-list.component';
-import { AddEditStudentModalComponent } from './components/add-edit-student-modal/add-edit-student-modal.component';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { StudentsRoutingModule } from './students-routing.module';
 
+import { CoursesRoutingModule } from './courses-routing.module';
+import { CoursesComponent } from './components/courses/courses.component';
+import { CoursesListComponent } from './components/courses-list/courses-list.component';
+import { AddEditCourseModalComponent } from './components/add-edit-course-modal/add-edit-course-modal.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
 import { MatTableModule } from '@angular/material/table';
-
-import { StudentsComponent } from './components/students/students.component';
-import { TopStudentsComponent } from './components/top-students/top-students.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
 
 @NgModule({
-  declarations: [StudentsListComponent, AddEditStudentModalComponent, StudentsComponent, TopStudentsComponent],
+  declarations: [
+    CoursesComponent,
+    CoursesListComponent,
+    AddEditCourseModalComponent
+  ],
   imports: [
     CommonModule,
+    CoursesRoutingModule,
     ReactiveFormsModule,
     FormsModule,
     SharedModule,
-    StudentsRoutingModule,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
@@ -36,8 +40,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatInputModule,
     MatTableModule,
     MatMenuModule,
-    MatTooltipModule
-  ],
-  exports: [StudentsListComponent, AddEditStudentModalComponent, StudentsComponent],
+    MatTooltipModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+  ]
 })
-export class StudentsModule { }
+export class CoursesModule { }

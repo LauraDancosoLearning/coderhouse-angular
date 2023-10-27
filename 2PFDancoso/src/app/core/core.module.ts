@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ToolbarModule } from './components/toolbar/toolbar.module';
 import { SidebarModule } from './components/sidebar/sidebar.module';
 
-
-
 @NgModule({
   declarations: [
   ],

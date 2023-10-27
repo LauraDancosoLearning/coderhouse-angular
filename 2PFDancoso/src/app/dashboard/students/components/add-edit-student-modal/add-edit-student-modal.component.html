@@ -6,14 +6,14 @@
         <mat-label>First name</mat-label>
         <input [placeholder]="(randomNamePlaceholder | async) || 'Name'" formControlName="name" matInput required />
         <mat-error *ngFor="let error of form.get('name')?.errors | keyvalue">
-          {{ getErrorMessage(error.key, error.value) }}
+          {{ errorService.getErrorMessage(error.key, error.value) }}
         </mat-error>
       </mat-form-field>
       <mat-form-field class="col mb-1">
         <mat-label>Last name</mat-label>
         <input formControlName="lastName" matInput required />
         <mat-error *ngFor="let error of form.get('lasName')?.errors | keyvalue">
-          {{ getErrorMessage(error.key, error.value) }}
+          {{ errorService.getErrorMessage(error.key, error.value) }}
         </mat-error>
       </mat-form-field>
     </div>
@@ -22,7 +22,7 @@
         <mat-label>Email</mat-label>
         <input type="email" formControlName="email" matInput required />
         <mat-error *ngFor="let error of form.get('email')?.errors | keyvalue">
-          {{ getErrorMessage(error.key, error.value) }}
+          {{ errorService.getErrorMessage(error.key, error.value) }}
         </mat-error>
       </mat-form-field>
     </div>
@@ -31,7 +31,7 @@
         <mat-label>DNI</mat-label>
         <input id="dni" type="number" matInput required formControlName="dni" />
         <mat-error *ngFor="let error of form.get('dni')?.errors | keyvalue">
-          {{ getErrorMessage(error.key, error.value) }}
+          {{ errorService.getErrorMessage(error.key, error.value) }}
         </mat-error>
       </mat-form-field>
     </div>
@@ -42,7 +42,7 @@
           <input matInput type="number" step=".5" class="form-control" placeholder="Mark"
             [formControl]="getFormControlArray(i)" />
           <mat-error *ngFor="let error of getFormControlArray(i)?.errors | keyvalue">
-            {{getErrorMessage(error.key, error.value)}}
+            {{ errorService.getErrorMessage(error.key, error.value)}}
           </mat-error>
         </mat-form-field>
         <button matTooltip="Remove mark" mat-icon-button *ngIf="getFormArrayMarks().value.length>1" color="warn" aria-label="delete Mark"

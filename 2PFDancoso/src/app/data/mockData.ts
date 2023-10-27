@@ -1,3 +1,4 @@
+import { Course } from "../dashboard/courses/models/course.model";
 import { Student } from "../dashboard/students/models/student.model";
 
 export const STUDENTS_MOCKED: Student[] = [
@@ -34,3 +35,13 @@ export const STUDENTS_MOCKED: Student[] = [
     marks: [10],
   },
 ];
+
+export const COURSES_MOCKED: Course[] = [
+  {
+    id: 1,
+    name: 'Angular',
+    description: 'Angular de 0 a pro',
+    startDate: new Date(2024, 1, 10),
+    endDate: new Date(2024, 3, 10)
+  }
+]

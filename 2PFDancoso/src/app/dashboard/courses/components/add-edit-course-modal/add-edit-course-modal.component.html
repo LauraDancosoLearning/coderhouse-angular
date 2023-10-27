@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>{{ course?.id ? "Edit" : "Add" }} course</h2>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="form" class="container">
+        <div class="row">
+            <mat-form-field class="col mb-1">
+                <mat-label>Name</mat-label>
+                <input formControlName="name" matInput required />
+                <mat-error *ngFor="let error of form.get('name')?.errors | keyvalue">
+                    {{ errorService.getErrorMessage(error.key, error.value) }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field class="col-12 mb-1">
+                <mat-label>Description</mat-label>
+                <textarea formControlName="description" matInput required> </textarea>
+                <mat-error *ngFor="let error of form.get('description')?.errors | keyvalue">
+                    {{ errorService.getErrorMessage(error.key, error.value) }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field class="col mb-1">
+                <mat-label>Start date</mat-label>
+                <input matInput [matDatepicker]="startDatePicker" formControlName="startDate">
+                <mat-hint>DD/MM/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #startDatePicker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="col mb-1">
+                <mat-label>End date</mat-label>
+                <input matInput [matDatepicker]="endDatePicker" formControlName="endDate">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #endDatePicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button (click)="onSubmit()" color="primary" [disabled]="form.invalid || form.untouched" mat-button>
+        Submit
+    </button>
+</mat-dialog-actions>

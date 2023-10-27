@@ -6,6 +6,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { RandomService } from '../../../../shared/services/random.service';
 import { Student } from '../../models/student.model';
 import { gmailValidator } from '../../../../shared/validators/gmailValidator';
+import { ErrorService } from 'src/app/shared/services/error.service';
 
 @Component({
   selector: 'add-edit-student-modal',
@@ -13,12 +14,12 @@ import { gmailValidator } from '../../../../shared/validators/gmailValidator';
   styleUrls: ['./add-edit-student-modal.component.scss'],
 })
 export class AddEditStudentModalComponent {
-  subscriptions: Subscription[] = [];
   form: FormGroup;
 
   randomNamePlaceholder: Promise<string>;
 
   constructor(
+    public errorService: ErrorService,
     public randomService: RandomService,
     public formBuilder: FormBuilder,
     private matDialogRef: MatDialogRef<AddEditStudentModalComponent>,
@@ -65,30 +66,6 @@ export class AddEditStudentModalComponent {
 
   showError(key: string) {
     return !!this.form.get(key)?.errors && this.form.get(key)?.touched;
-  }
-
-  getErrorMessage(key: string, value: any) {
-    let message;
-    switch (key) {
-      case 'required':
-        message = 'This field is required';
-        break;
-      case 'min':
-        message = `The field must be at least ${value.min}`;
-        break;
-      case 'max':
-        message = `The field must be a maximum of ${value.max}`;
-        break;
-      case 'email':
-        message = !!value?.gmail
-          ? 'The email must be a gmail account'
-          : 'Invalid email';
-        break;
-      default:
-        message = 'Invalid field';
-        break;
-    }
-    return message;
   }
 
   getFormArrayMarks(){

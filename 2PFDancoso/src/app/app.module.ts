@@ -4,8 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CoreModule } from './core/core.module';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 
 
@@ -18,7 +17,9 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     AppRoutingModule,    
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'es-ES'}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
