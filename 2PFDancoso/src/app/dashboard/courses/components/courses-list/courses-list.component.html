@@ -25,7 +25,7 @@
           <button mat-icon-button matTooltip="delete" color="warn" class="mx-1" (click)="this.coursesService.deleteCourse(course.id)">
             <mat-icon>delete</mat-icon>
           </button>
-          <button mat-icon-button matTooltip="open detail course" class="mx-1">
+          <button mat-icon-button matTooltip="open detail course" class="mx-1" routerLink="{{course.id}}">
             <mat-icon>start</mat-icon>
           </button>
         </td>

@@ -18,13 +18,17 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { CourseDetailComponent } from './components/course-detail/course-detail.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { EnrollmentsModule } from '../enrollments/enrollments.module';
 
 
 @NgModule({
   declarations: [
     CoursesComponent,
     CoursesListComponent,
-    AddEditCourseModalComponent
+    AddEditCourseModalComponent,
+    CourseDetailComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +46,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatMenuModule,
     MatTooltipModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatExpansionModule,
+    EnrollmentsModule
   ]
 })
 export class CoursesModule { }
