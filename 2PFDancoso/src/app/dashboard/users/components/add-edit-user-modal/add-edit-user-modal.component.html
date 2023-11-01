@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>{{ student?.id ? "Edit" : "Add" }} student</h2>
+<h2 mat-dialog-title>{{ user?.id ? "Edit" : "Add" }} user</h2>
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="form" class="container">
     <div class="row">
@@ -29,32 +29,11 @@
     <div class="row">
       <mat-form-field class="col mb-1">
         <mat-label>DNI</mat-label>
-        <input id="studentDni" type="number" matInput required formControlName="dni" />
+        <input id="userDni" type="number" matInput required formControlName="dni" />
         <mat-error *ngFor="let error of form.get('dni')?.errors | keyvalue">
           {{ errorService.getErrorMessage(error.key, error.value) }}
         </mat-error>
       </mat-form-field>
-    </div>
-    <div class="row">
-      <div class="col-6 mb-5 d-flex " *ngFor="let mark of getFormArrayMarks().controls let i = index">
-        <mat-form-field formArrayName="marks">
-          <mat-label>Mark {{i+1}}</mat-label>
-          <input matInput type="number" step=".5" class="form-control" placeholder="Mark"
-            [formControl]="getFormControlArray(i)" />
-          <mat-error *ngFor="let error of getFormControlArray(i)?.errors | keyvalue">
-            {{ errorService.getErrorMessage(error.key, error.value)}}
-          </mat-error>
-        </mat-form-field>
-        <button matTooltip="Remove mark" mat-icon-button *ngIf="getFormArrayMarks().value.length>1" color="warn" aria-label="delete Mark"
-          (click)="deleteMarkFormControl(i)" class="my-2">
-          <mat-icon>close</mat-icon>
-        </button>
-      </div>
-    </div>
-    <div *ngIf="getFormArrayMarks().value.length<4">
-      <button mat-button color="primary" (click)="addMarkFormControl()">
-        add mark
-      </button>
     </div>
   </form>
 </mat-dialog-content>

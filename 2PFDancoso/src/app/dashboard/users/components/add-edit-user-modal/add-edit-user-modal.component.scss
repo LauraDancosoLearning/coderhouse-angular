@@ -1,10 +1,10 @@
-#studentDni::-webkit-outer-spin-button,
-#studentDni::-webkit-inner-spin-button {
+#userDni::-webkit-outer-spin-button,
+#userDni::-webkit-inner-spin-button {
     /* display: none; <- Crashes Chrome on hover */
     -webkit-appearance: none;
     margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
-#studentDni{
+#userDni{
     -moz-appearance:textfield; /* Firefox */
 }

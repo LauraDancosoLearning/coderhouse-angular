@@ -4,6 +4,10 @@ export const ROUTER_LINKS: { link: string;  name:string}[] = [
       name: 'Home'
     },
     {
+      link: '/dashboard/users',
+      name: 'Users'
+    },
+    {
       link: '/dashboard/students',
       name: 'Students'
     },

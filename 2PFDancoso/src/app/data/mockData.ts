@@ -1,5 +1,27 @@
 import { Course } from "../dashboard/courses/models/course.model";
 import { Student } from "../dashboard/students/models/student.model";
+import { RolType } from "../dashboard/users/models/rol.enum";
+import { User } from "../dashboard/users/models/user.model";
+
+
+export const USERS_MOCKED: User[] = [
+  {
+    id: 1,
+    name: 'juan',
+    lastName: 'ramirez',
+    dni: 32873297,
+    email: 'ljdfa@gmail.com',
+    rol: RolType.Default
+  },
+  {
+    id: 2,
+    name: 'pepe',
+    lastName: 'ramirez',
+    dni: 32873297,
+    email: 'ljdfa@gmail.com',
+    rol: RolType.Default
+  }
+];
 
 export const STUDENTS_MOCKED: Student[] = [
   {
