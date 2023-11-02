@@ -1,0 +1,46 @@
+<h2 mat-dialog-title>Enroll students</h2>
+<mat-dialog-content class="mat-typography">
+
+    <form>
+        <mat-form-field class="w-100">
+          <mat-label>Students</mat-label>
+          <mat-chip-grid class="my-3" #chipGrid aria-label="Student selection">
+            <mat-chip-row
+              *ngFor="let studentId of studentsIdsForm.value"
+              (removed)="remove(studentId)"
+            >
+            {{getStudent(studentId) | fullname}}
+              <button matChipRemove [attr.aria-label]="'remove ' + studentId">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+          </mat-chip-grid>
+          <input
+            placeholder="Search student by name or dni..."
+            #studentInput
+            [formControl]="studentCtrl"
+            [matChipInputFor]="chipGrid"
+            [matAutocomplete]="auto"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          />
+          <mat-autocomplete
+            #auto="matAutocomplete"
+            (optionSelected)="selected($event)"
+          >
+            <mat-option *ngFor="let studentId of filteredStudentsIds | async" [value]="getStudent(studentId)">
+              {{getStudent(studentId) | fullname}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+
+      <div *ngIf="studentsIdsForm.value?.length==0" class="alert alert-warning" role="alert">
+        This course has no students
+      </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button (click)="onSubmit()" color="primary" [disabled]="studentsIdsForm.invalid" mat-button>
+        Submit
+    </button>
+</mat-dialog-actions>

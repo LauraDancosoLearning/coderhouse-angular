@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Course } from '../../models/course.model';
 import { CoursesService } from '../../services/courses.service';
 import { Subject, pipe, takeUntil } from 'rxjs';

@@ -1,3 +1,13 @@
-<p *ngFor="let enrollment of enrollments$ | async">
-    {{enrollment.courseId}}
-</p>
+<ng-container *ngIf="enrolledStudents$ | async as students">
+  <div class="d-flex justify-content-end">
+    <button
+      matTooltip="Enroll students"
+      mat-mini-fab
+      color="primary"
+      (click)="openEnrollStudentsModal(students)"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <enrollments-list [courseId]="courseId" [students]="students"></enrollments-list>
+</ng-container>

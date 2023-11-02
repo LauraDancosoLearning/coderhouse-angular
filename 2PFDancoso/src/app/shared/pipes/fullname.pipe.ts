@@ -7,8 +7,8 @@ import { Student } from '../../dashboard/students/models/student.model';
 })
 export class FullnamePipe implements PipeTransform {
 
-  transform(student: Student, ...args: unknown[]): string {
-    return `${new TitleCasePipe().transform(student.lastName)}, ${new TitleCasePipe().transform(student.name)}`;
+  transform(student?: Student, ...args: unknown[]): string {
+    return `${new TitleCasePipe().transform(student?.lastName)}, ${new TitleCasePipe().transform(student?.name)}`;
   }
 
 }

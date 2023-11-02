@@ -10,7 +10,7 @@ export const USERS_MOCKED: User[] = [
     id: 1,
     name: 'juan',
     lastName: 'ramirez',
-    dni: 32873297,
+    dni: 40808787,
     email: 'ljdfa@gmail.com',
     rol: RolType.Default
   },
@@ -29,7 +29,7 @@ export const STUDENTS_MOCKED: Student[] = [
     id: 1,
     name: 'juan',
     lastName: 'ramirez',
-    dni: 32873297,
+    dni: 40808787,
     email: 'ljdfa@gmail.com',
     marks: [9],
   },
