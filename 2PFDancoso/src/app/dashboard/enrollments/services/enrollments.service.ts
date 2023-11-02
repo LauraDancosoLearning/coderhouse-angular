@@ -38,9 +38,10 @@ export class EnrollmentsService {
     this.enrollmentsUpdated.emit();
   }
 
-  unenrollStudent(studentId: number, courseId: number) {
+
+  unenroll(courseId: number, studentId?: number) {
     let enrollmentId = this.enrollmentsList.find(
-      (s) => s.courseId == courseId && s.studentId == studentId
+      (s) => s.courseId == courseId && (studentId) ? s.studentId == studentId : true
     )?.id;
     if (enrollmentId) {
       this.enrollmentsList = this.enrollmentsList.filter(

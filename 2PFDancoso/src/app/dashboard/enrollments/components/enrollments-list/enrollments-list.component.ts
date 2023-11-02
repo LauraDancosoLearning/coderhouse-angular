@@ -35,7 +35,7 @@ export class EnrollmentsListComponent implements OnDestroy, OnInit{
   }
 
   unenrrolStudent(studentId:number){
-    this.enrollmentsService.unenrollStudent(studentId,this.courseId);
+    this.enrollmentsService.unenroll(this.courseId, studentId);
     this.renderTable();
   }
 }

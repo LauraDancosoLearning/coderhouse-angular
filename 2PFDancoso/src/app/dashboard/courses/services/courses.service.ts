@@ -2,6 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Course } from '../models/course.model';
 import { COURSES_MOCKED } from 'src/app/data/mockData';
+import { EnrollmentsService } from '../../enrollments/services/enrollments.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,9 @@ export class CoursesService {
   public courses: BehaviorSubject<Course[]>;
   public courses$:Observable<Course[]> ;
 
-  constructor(){
+  constructor(
+    private enrollmentsService: EnrollmentsService
+  ){
     //For testing porpuses
     this.coursesList = COURSES_MOCKED;
 
@@ -30,7 +33,8 @@ export class CoursesService {
   }
 
   deleteCourse(id: number){
-    this.coursesList = this.coursesList.filter(s=>s.id !== id);    
+    this.enrollmentsService.unenroll(id);
+    this.coursesList = this.coursesList.filter(s=>s.id !== id);
     this.courses.next(this.coursesList);
     this.coursesUpdated.emit();
   }
