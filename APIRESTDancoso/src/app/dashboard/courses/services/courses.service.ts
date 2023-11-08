@@ -1,0 +1,52 @@
+import { EventEmitter, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Course } from '../models/course.model';
+import { COURSES_MOCKED } from 'src/app/data/mockData';
+import { EnrollmentsService } from '../../enrollments/services/enrollments.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CoursesService {
+
+  private coursesList: Course[] = [];
+  private coursesUpdated: EventEmitter<void> = new EventEmitter();
+  public coursesUpdated$: Observable<void> = this.coursesUpdated.asObservable();
+  
+  private courses: BehaviorSubject<Course[]>;
+  public courses$:Observable<Course[]> ;
+
+  constructor(
+    private enrollmentsService: EnrollmentsService
+  ){
+    //For testing porpuses
+    this.coursesList = COURSES_MOCKED;
+
+    this.courses = new BehaviorSubject<Course[]>(this.coursesList);
+    this.courses$ = this.courses.asObservable();
+  }
+
+  addCourse(Course: Course){
+    this.coursesList.push({...Course, id: new Date().getTime()});
+    this.courses.next(this.coursesList);
+    this.coursesUpdated.emit();
+  }
+
+  deleteCourse(id: number){
+    this.enrollmentsService.unenroll(id);
+    this.coursesList = this.coursesList.filter(s=>s.id !== id);
+    this.courses.next(this.coursesList);
+    this.coursesUpdated.emit();
+  }
+  
+  updateCourse(courseToUpdate: Course){
+    let Course = this.coursesList.find(s=> s.id === courseToUpdate.id);
+    
+    const courseIndex = this.coursesList.findIndex((s=> s.id === courseToUpdate.id));
+    if(courseIndex != -1){
+      this.coursesList[courseIndex] = { ...Course, ...courseToUpdate};
+      this.courses.next(this.coursesList);
+      this.coursesUpdated.emit();
+    }
+  }
+}

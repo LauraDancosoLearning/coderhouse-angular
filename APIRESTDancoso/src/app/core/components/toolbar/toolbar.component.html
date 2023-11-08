@@ -1,0 +1,14 @@
+<mat-toolbar color="primary" class="">
+  <span class="fill-remaining-space">
+    <button mat-icon-button (click)="menuTriggered.emit()">
+      <mat-icon>{{ menuOpened ? "menu_open" : "menu" }} </mat-icon>
+    </button>
+  </span>
+  <span class="fill-remaining-space">{{ title }}</span>
+  <span class="spacer"></span>
+  <span class="fill-remaining-space">
+    <button mat-icon-button *ngIf="authService.user$ | async" (click)="logout()">
+      <mat-icon>power_settings_new</mat-icon>
+    </button>
+  </span>
+</mat-toolbar>
