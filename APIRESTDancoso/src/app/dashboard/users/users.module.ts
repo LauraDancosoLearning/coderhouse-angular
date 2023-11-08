@@ -18,6 +18,7 @@ import { UsersComponent } from './components/users/users.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AddEditUserModalComponent } from './components/add-edit-user-modal/add-edit-user-modal.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [UsersListComponent, AddEditUserModalComponent, UsersComponent],
