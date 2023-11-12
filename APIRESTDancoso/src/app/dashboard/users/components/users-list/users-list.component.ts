@@ -7,6 +7,7 @@ import { User } from '../../models/user.model';
 import { UsersService } from '../../services/users.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditUserModalComponent } from '../add-edit-user-modal/add-edit-user-modal.component';
+import { RolType } from '../../models/rol.enum';
 
 @Component({
   selector: 'users-list',
@@ -42,8 +43,29 @@ export class UsersListComponent implements OnDestroy, OnInit {
     this.dialog.open(AddEditUserModalComponent, {data: user, disableClose: true})
     .afterClosed().subscribe(s=>{
       if(!!s){
-        this.usersService.updateUser(s);
+        this.usersService.updateUser(s).subscribe(
+          {
+            next: ()=>{},
+            error: (err)=> {
+              
+            },
+          })
       }
     });
+  }
+
+  deleteUser(userId: number){
+    this.usersService.deleteUser(userId).subscribe(
+      {
+        next: ()=>{},
+        error: (err)=> {
+          
+        },
+      }
+    )
+  }
+
+  userIsAdmin(user: User){
+    return user.roles?.some(r=>r === RolType.Admin);
   }
 }

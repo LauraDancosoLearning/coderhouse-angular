@@ -2,6 +2,7 @@ import { IUserBase } from "src/app/shared/models/userBase.model";
 import { RolType } from './rol.enum';
 
 export interface User extends IUserBase{
-    roles: RolType[]
+    roles: RolType[];
+    token: string;
 }
  

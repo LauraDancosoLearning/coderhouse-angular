@@ -5,48 +5,48 @@ import { RolType } from "../dashboard/users/models/rol.enum";
 import { User } from "../dashboard/users/models/user.model";
 
 
-export const USERS_MOCKED: User[] = [
-  {
-    id: 1,
-    name: 'juan',
-    lastName: 'ramirez',
-    dni: 40808787,
-    email: 'ljdfa@gmail.com',
-    roles: [RolType.Default]
-  },
-  {
-    id: 2,
-    name: 'pepe',
-    lastName: 'ramirez',
-    dni: 32873297,
-    email: 'ljdfa@gmail.com',
-    roles: [RolType.Default]
-  },
-  {
-    id: 3,
-    name: 'Laura',
-    lastName: 'D.',
-    dni: 32873297,
-    email: 'laura@gmail.com',
-    roles: [RolType.Admin]
-  },
-  {
-    id: 4,
-    name: 'Admin',
-    lastName: 'A',
-    dni: 32873297,
-    email: 'admin@gmail.com',
-    roles: [RolType.Admin]
-  },
-  {
-    id: 5,
-    name: 'User',
-    lastName: 'A',
-    dni: 32873297,
-    email: 'user@gmail.com',
-    roles: [RolType.Default]
-  }
-];
+// export const USERS_MOCKED: User[] = [
+//   {
+//     id: 1,
+//     name: 'juan',
+//     lastName: 'ramirez',
+//     dni: 40808787,
+//     email: 'ljdfa@gmail.com',
+//     roles: [RolType.Default]
+//   },
+//   {
+//     id: 2,
+//     name: 'pepe',
+//     lastName: 'ramirez',
+//     dni: 32873297,
+//     email: 'ljdfa@gmail.com',
+//     roles: [RolType.Default]
+//   },
+//   {
+//     id: 3,
+//     name: 'Laura',
+//     lastName: 'D.',
+//     dni: 32873297,
+//     email: 'laura@gmail.com',
+//     roles: [RolType.Admin]
+//   },
+//   {
+//     id: 4,
+//     name: 'Admin',
+//     lastName: 'A',
+//     dni: 32873297,
+//     email: 'admin@gmail.com',
+//     roles: [RolType.Admin]
+//   },
+//   {
+//     id: 5,
+//     name: 'User',
+//     lastName: 'A',
+//     dni: 32873297,
+//     email: 'user@gmail.com',
+//     roles: [RolType.Default]
+//   }
+// ];
 
 export const STUDENTS_MOCKED: Student[] = [
   {

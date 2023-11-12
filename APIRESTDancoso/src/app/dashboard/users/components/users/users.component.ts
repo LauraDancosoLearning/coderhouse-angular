@@ -18,7 +18,12 @@ export class UsersComponent {
     })
     .afterClosed().subscribe(s=>{
       if(!!s){
-        this.usersService.addUser(s);
+        this.usersService.addUser(s).subscribe(
+          ()=>{},
+          (err)=>{
+
+          }
+        );
       }
     });
   }
