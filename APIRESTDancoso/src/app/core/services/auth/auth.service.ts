@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, map, tap, of } from 'rxjs';
+import { BehaviorSubject, Observable, map, of } from 'rxjs';
 import { User } from 'src/app/dashboard/users/models/user.model';
 import { RolType } from '../../../dashboard/users/models/rol.enum';
 import { HttpClient } from '@angular/common/http';

@@ -16,9 +16,7 @@ export class StudentsService {
   public students$:Observable<Student[]> ;
 
   constructor(){
-    //For testing porpuses
-    this.studentsList = STUDENTS_MOCKED;
-
+    
     this.students = new BehaviorSubject<Student[]>(this.studentsList);
     this.students$ = this.students.asObservable();
   }

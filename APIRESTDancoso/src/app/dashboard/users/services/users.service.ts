@@ -12,11 +12,9 @@ export class UsersService {
   private usersUpdated: EventEmitter<void> = new EventEmitter();
   public usersUpdated$: Observable<void> = this.usersUpdated.asObservable();
 
-  private users!: BehaviorSubject<User[]>;
   public users$!: Observable<User[]>;
 
   constructor(private httpClient: HttpClient) {
-    this.users = new BehaviorSubject<User[]>([]);
     this.getUsers();
   }
 
@@ -24,8 +22,8 @@ export class UsersService {
     this.users$ = this.httpClient.get<User[]>(`${environment.baseUrl}/users`);
   }
 
-  addUser(user: User) {
-    return this.httpClient.post(`${environment.baseUrl}/users`, { ...user, token: new Date().getTime() }).pipe(
+  addUser(user: User, admin:boolean = false) {
+    return this.httpClient.post(`${environment.baseUrl}/users`, { ...user, token: new Date().getTime(), password: admin? '123456' : '654321'}).pipe(
       tap(() => {
         this.getUsers();
         this.usersUpdated.emit();

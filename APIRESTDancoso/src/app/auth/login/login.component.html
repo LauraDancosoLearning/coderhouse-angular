@@ -12,7 +12,7 @@
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field class="w-100">
-                    <input [maxlength]="passwordMinMaxLength[1]" type="password" matInput placeholder="Password"
+                    <input [minlength]="passwordMinMaxLength[0]" [maxlength]="passwordMinMaxLength[1]" type="password" matInput placeholder="Password"
                         formControlName="password">
                     <mat-error *ngFor="let error of form.get('password')?.errors | keyvalue">
                         {{ errorFormService.getErrorMessage(error.key, error.value) }}

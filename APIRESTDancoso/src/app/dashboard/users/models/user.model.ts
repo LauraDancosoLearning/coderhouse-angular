@@ -4,5 +4,6 @@ import { RolType } from './rol.enum';
 export interface User extends IUserBase{
     roles: RolType[];
     token: string;
+    password: string;
 }
  

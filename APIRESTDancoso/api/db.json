@@ -9,7 +9,8 @@
       "roles": [
         0
       ],
-      "token": "sjfoiepowkopfkofpkw"
+      "token": "sjfoiepowkopfkofpkw",
+      "password": "123456"
     },
     {
       "id": 4,
@@ -20,7 +21,8 @@
       "roles": [
         0
       ],
-      "token": "djoidjfiiiiii"
+      "token": "djoidjfiiiiii",
+      "password": "123456"
     },
     {
       "id": 5,
@@ -31,7 +33,8 @@
       "roles": [
         1
       ],
-      "token": "kdfoijfiojioewj"
+      "token": "kdfoijfiojioewj",
+      "password": "654321"
     },
     {
       "id": 6,
@@ -39,7 +42,8 @@
       "lastName": "last",
       "email": "lau@gmail.com",
       "dni": 40808787,
-      "token": 1699802326158
+      "token": 1699802326158,
+      "password": "654321"
     }
   ],
   "students": [
