@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ErrorService } from 'src/app/shared/services/error.service';
+import { ErrorFormService } from 'src/app/shared/services/errorForm.service';
 import { RandomService } from 'src/app/shared/services/random.service';
 import { User } from '../../models/user.model';
 import { gmailValidator } from 'src/app/shared/validators/gmailValidator';
@@ -17,7 +17,7 @@ export class AddEditUserModalComponent {
   randomNamePlaceholder: Promise<string>;
 
   constructor(
-    public errorService: ErrorService,
+    public errorFormService: ErrorFormService,
     public randomService: RandomService,
     public formBuilder: FormBuilder,
     private matDialogRef: MatDialogRef<AddEditUserModalComponent>,

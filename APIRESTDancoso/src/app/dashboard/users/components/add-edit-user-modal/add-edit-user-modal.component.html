@@ -6,14 +6,14 @@
         <mat-label>First name</mat-label>
         <input [placeholder]="(randomNamePlaceholder | async) || 'Name'" formControlName="name" matInput required />
         <mat-error *ngFor="let error of form.get('name')?.errors | keyvalue">
-          {{ errorService.getErrorMessage(error.key, error.value) }}
+          {{ errorFormService.getErrorMessage(error.key, error.value) }}
         </mat-error>
       </mat-form-field>
       <mat-form-field class="col mb-1">
         <mat-label>Last name</mat-label>
         <input formControlName="lastName" matInput required />
         <mat-error *ngFor="let error of form.get('lasName')?.errors | keyvalue">
-          {{ errorService.getErrorMessage(error.key, error.value) }}
+          {{ errorFormService.getErrorMessage(error.key, error.value) }}
         </mat-error>
       </mat-form-field>
     </div>
@@ -22,7 +22,7 @@
         <mat-label>Email</mat-label>
         <input type="email" formControlName="email" matInput required />
         <mat-error *ngFor="let error of form.get('email')?.errors | keyvalue">
-          {{ errorService.getErrorMessage(error.key, error.value) }}
+          {{ errorFormService.getErrorMessage(error.key, error.value) }}
         </mat-error>
       </mat-form-field>
     </div>
@@ -31,7 +31,7 @@
         <mat-label>DNI</mat-label>
         <input id="userDni" type="number" matInput required formControlName="dni" />
         <mat-error *ngFor="let error of form.get('dni')?.errors | keyvalue">
-          {{ errorService.getErrorMessage(error.key, error.value) }}
+          {{ errorFormService.getErrorMessage(error.key, error.value) }}
         </mat-error>
       </mat-form-field>
     </div>

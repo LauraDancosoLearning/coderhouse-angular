@@ -5,7 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Subject, map, startWith, takeUntil } from 'rxjs';
 import { Student } from 'src/app/dashboard/students/models/student.model';
 import { StudentsService } from 'src/app/dashboard/students/services/students.service';
-import { ErrorService } from 'src/app/shared/services/error.service';
+import { ErrorFormService } from 'src/app/shared/services/errorForm.service';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import {
   MatAutocompleteSelectedEvent
@@ -31,7 +31,7 @@ export class EnrollStudentModalComponent implements OnDestroy{
   @ViewChild('studentInput') studentInput!: ElementRef<HTMLInputElement>;
   
   constructor(
-    public errorService: ErrorService,
+    public errorFormService: ErrorFormService,
     public formBuilder: FormBuilder,
     private matDialogRef: MatDialogRef<EnrollStudentModalComponent>,
     public studentsService: StudentsService,

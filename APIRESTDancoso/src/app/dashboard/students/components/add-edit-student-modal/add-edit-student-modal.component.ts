@@ -6,7 +6,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { RandomService } from '../../../../shared/services/random.service';
 import { Student } from '../../models/student.model';
 import { gmailValidator } from '../../../../shared/validators/gmailValidator';
-import { ErrorService } from 'src/app/shared/services/error.service';
+import { ErrorFormService } from 'src/app/shared/services/errorForm.service';
 
 @Component({
   selector: 'add-edit-student-modal',
@@ -19,7 +19,7 @@ export class AddEditStudentModalComponent {
   randomNamePlaceholder: Promise<string>;
 
   constructor(
-    public errorService: ErrorService,
+    public errorFormService: ErrorFormService,
     public randomService: RandomService,
     public formBuilder: FormBuilder,
     private matDialogRef: MatDialogRef<AddEditStudentModalComponent>,

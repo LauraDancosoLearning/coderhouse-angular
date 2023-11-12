@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { UrlService } from 'src/app/core/services/url/url.service';
-import { ErrorService } from 'src/app/shared/services/error.service';
+import { ErrorFormService } from 'src/app/shared/services/errorForm.service';
 import { gmailValidator } from 'src/app/shared/validators/gmailValidator';
 
 @Component({
@@ -26,7 +26,7 @@ export class LoginComponent implements OnDestroy {
     private authService: AuthService,
     private urlService: UrlService,
     private router: Router,
-    public errorService: ErrorService
+    public errorFormService: ErrorFormService
   ) {
     this.form = this.formBuilder.group({
       email: formBuilder.control(null, [

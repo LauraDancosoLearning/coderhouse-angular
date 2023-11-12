@@ -6,7 +6,7 @@
                 <mat-label>Name</mat-label>
                 <input formControlName="name" matInput required />
                 <mat-error *ngFor="let error of form.get('name')?.errors | keyvalue">
-                    {{ errorService.getErrorMessage(error.key, error.value) }}
+                    {{ errorFormService.getErrorMessage(error.key, error.value) }}
                 </mat-error>
             </mat-form-field>
         </div>
@@ -15,7 +15,7 @@
                 <mat-label>Description</mat-label>
                 <textarea formControlName="description" matInput required> </textarea>
                 <mat-error *ngFor="let error of form.get('description')?.errors | keyvalue">
-                    {{ errorService.getErrorMessage(error.key, error.value) }}
+                    {{ errorFormService.getErrorMessage(error.key, error.value) }}
                 </mat-error>
             </mat-form-field>
         </div>

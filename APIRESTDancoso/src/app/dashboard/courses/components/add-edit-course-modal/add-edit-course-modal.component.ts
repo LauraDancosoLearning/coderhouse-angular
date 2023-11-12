@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Course } from '../../models/course.model';
-import { ErrorService } from 'src/app/shared/services/error.service';
+import { ErrorFormService } from 'src/app/shared/services/errorForm.service';
 
 @Component({
   selector: 'app-add-edit-course-modal',
@@ -13,7 +13,7 @@ export class AddEditCourseModalComponent {
   form: FormGroup;
 
   constructor(
-    public errorService: ErrorService,
+    public errorFormService: ErrorFormService,
     public formBuilder: FormBuilder,
     private matDialogRef: MatDialogRef<AddEditCourseModalComponent>,
     @Inject(MAT_DIALOG_DATA) public course?: Course
