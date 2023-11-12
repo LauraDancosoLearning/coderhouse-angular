@@ -1,72 +1,72 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Enrollment } from '../models/enrollment.model';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { ENROLLMENTS_MOCKED } from 'src/app/data/mockData';
+import { Observable, concat, concatMap, flatMap, forkJoin, map, mergeMap, shareReplay, tap, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EnrollmentsService {
-  private enrollmentsList: Enrollment[] = [];
   private enrollmentsUpdated: EventEmitter<void> = new EventEmitter();
-  public enrollmentsUpdated$: Observable<void> =
-    this.enrollmentsUpdated.asObservable();
+  public enrollmentsUpdated$: Observable<void> = this.enrollmentsUpdated.asObservable();
 
-  private enrollments: BehaviorSubject<Enrollment[]>;
-  public enrollments$: Observable<Enrollment[]>;
+  public enrollments$!: Observable<Enrollment[]>;
 
-  constructor() {
-    //For testing porpuses
-    this.enrollmentsList = ENROLLMENTS_MOCKED;
+  constructor(private httpClient: HttpClient) {
+    this.getEnrollments();
+  }
 
-    this.enrollments = new BehaviorSubject<Enrollment[]>(this.enrollmentsList);
-    this.enrollments$ = this.enrollments.asObservable();
+  getEnrollments(){
+    this.enrollments$ = this.httpClient.get<Enrollment[]>(`${environment.baseUrl}/enrollments`).pipe(shareReplay(),
+    tap(()=>this.enrollmentsUpdated.emit())
+    )
   }
 
   addEnrollments(...enrollments: Enrollment[]) {
-    enrollments.forEach(
-      (enrollment, id) => (enrollment.id = new Date().getTime() + id)
+    let postSubs = enrollments.map(
+      (enrollment) =>
+      this.httpClient.post(`${environment.baseUrl}/enrollments`, enrollment).pipe(
+        tap(() => {
+          this.getEnrollments();
+          this.enrollmentsUpdated.emit();
+        })
+      )
     );
-    this.enrollmentsList = [...enrollments];
-    this.enrollments.next(this.enrollmentsList);
-    this.enrollmentsUpdated.emit();
+    return forkJoin(postSubs);
   }
 
   deleteEnrollment(id: number) {
-    this.enrollmentsList = this.enrollmentsList.filter((s) => s.id !== id);
-    this.enrollments.next(this.enrollmentsList);
-    this.enrollmentsUpdated.emit();
+    return this.httpClient.delete(`${environment.baseUrl}/enrollments/${id}`).pipe(
+      tap(() => {
+      this.getEnrollments();
+      this.enrollmentsUpdated.emit();
+    }))
   }
 
-
   unenroll(courseId: number, studentId?: number) {
-    let enrollmentId = this.enrollmentsList.find(
-      (s) => s.courseId == courseId && (studentId) ? s.studentId == studentId : true
-    )?.id;
-    if (enrollmentId) {
-      this.enrollmentsList = this.enrollmentsList.filter(
-        (s) => s.id != enrollmentId
-      );
-      this.enrollments.next(this.enrollmentsList);
-      this.enrollmentsUpdated.emit();
-    }
+    return this.httpClient.get<Enrollment[]>(`${environment.baseUrl}/enrollments?courseId=${courseId}&studentId=${studentId}`)
+    .pipe(
+      map(es=>(es?.length>0) ? es[0] : null),
+      mergeMap((enrollment: Enrollment | null)=>{
+        if(enrollment?.id){
+          return this.deleteEnrollment(enrollment.id)
+        }else{
+          return throwError(() => new Error("Enrollemnt not found"));
+        }
+      }),
+      tap(()=>{
+        this.getEnrollments();
+        this.enrollmentsUpdated.emit();
+      })
+
+    )
   }
 
   updateEnrollment(enrollmentToUpdate: Enrollment) {
-    let enrollment = this.enrollmentsList.find(
-      (s) => s.id === enrollmentToUpdate.id
-    );
-
-    const enrollmentIndex = this.enrollmentsList.findIndex(
-      (s) => s.id === enrollmentToUpdate.id
-    );
-    if (enrollmentIndex != -1) {
-      this.enrollmentsList[enrollmentIndex] = {
-        ...enrollment,
-        ...enrollmentToUpdate,
-      };
-      this.enrollments.next(this.enrollmentsList);
+    return this.httpClient.put(`${environment.baseUrl}/enrollments/${enrollmentToUpdate.id}`, enrollmentToUpdate).pipe(tap(() => {
+      this.getEnrollments();
       this.enrollmentsUpdated.emit();
-    }
+    }))
   }
 }

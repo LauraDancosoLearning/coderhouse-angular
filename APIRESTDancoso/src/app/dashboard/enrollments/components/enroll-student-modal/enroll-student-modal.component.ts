@@ -2,7 +2,7 @@ import { Component, ElementRef, Inject, Input, OnDestroy, ViewChild } from '@ang
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Observable, Subject, map, startWith, takeUntil } from 'rxjs';
+import { Observable, Subject, map, startWith, takeUntil, filter } from 'rxjs';
 import { Student } from 'src/app/dashboard/students/models/student.model';
 import { StudentsService } from 'src/app/dashboard/students/services/students.service';
 import { ErrorFormService } from 'src/app/shared/services/errorForm.service';
@@ -64,12 +64,13 @@ export class EnrollStudentModalComponent implements OnDestroy{
   }
 
   onSubmit(){
-    this.matDialogRef.close(this.studentsIdsForm.value.map((id:number)=>({studentId: id, courseId: this.data.courseId } as Enrollment)));
+    this.matDialogRef.close(this.studentsIdsForm.value.filter((id: number) => !this.data.enrolledStudentsIds?.includes(id) ).map((id:number)=>({studentId: id, courseId: this.data.courseId } as Enrollment)));
     this.studentCtrl.reset();
     this.studentsIdsForm.reset()
   }
 
   remove(student: string): void {
+    console.log("remove", student)
     if(this.studentsIdsForm.value) this.studentsIdsForm.setValue(this.studentsIdsForm.value?.filter((f:any)=>f!=student));
     this.studentCtrl.setValue(null);
   }

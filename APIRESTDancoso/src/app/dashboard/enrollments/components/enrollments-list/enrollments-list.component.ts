@@ -35,7 +35,19 @@ export class EnrollmentsListComponent implements OnDestroy, OnInit{
   }
 
   unenrrolStudent(studentId:number){
-    this.enrollmentsService.unenroll(this.courseId, studentId);
-    this.renderTable();
+    this.enrollmentsService.unenroll(this.courseId, studentId).subscribe(
+      {
+        next: ()=>{
+          this.enrollmentsService.getEnrollments();
+          this.renderTable();
+        },
+        error: (err)=> {
+          console.error(err)
+        },
+      });
+  }
+
+  removeTooltip(student: Student){
+    return `remove ${student.name} from course`;
   }
 }

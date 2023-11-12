@@ -1,10 +1,10 @@
 <ng-container *ngIf="enrolledStudents$ | async as students">
   <div class="d-flex justify-content-end">
-    <button
+    <button *ngIf="enrollments$ | async as enrollments"
       matTooltip="Enroll students"
       mat-mini-fab
       color="primary"
-      (click)="openEnrollStudentsModal(students)"
+      (click)="openEnrollStudentsModal(enrollments,students)"
     >
       <mat-icon>add</mat-icon>
     </button>

@@ -26,7 +26,7 @@
     <td mat-cell *matCellDef="let student">
       <button
         mat-icon-button
-        matTooltip="remove student from course"
+        [matTooltip]="removeTooltip(student)"
         color="warn"
         class=""
         (click)="unenrrolStudent(student.id)"

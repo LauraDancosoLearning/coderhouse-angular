@@ -10,7 +10,7 @@
               (removed)="remove(studentId)"
             >
             {{getStudent(studentId) | fullname}}
-              <button matChipRemove [attr.aria-label]="'remove ' + studentId">
+              <button *ngIf="!data.enrolledStudentsIds?.includes(studentId)" matChipRemove [attr.aria-label]="'remove ' + studentId">
                 <mat-icon>cancel</mat-icon>
               </button>
             </mat-chip-row>

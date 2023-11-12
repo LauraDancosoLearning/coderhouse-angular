@@ -6,7 +6,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Enrollment } from '../../models/enrollment.model';
-import { Observable, Subject, map, mergeMap, takeUntil } from 'rxjs';
+import { Observable, Subject, map, mergeMap, takeUntil, shareReplay } from 'rxjs';
 import { EnrollmentsService } from '../../services/enrollments.service';
 import { Student } from 'src/app/dashboard/students/models/student.model';
 import { StudentsService } from 'src/app/dashboard/students/services/students.service';
@@ -30,6 +30,9 @@ export class EnrollmentsComponent implements OnDestroy, OnChanges {
     public dialog: MatDialog,
   ) {
     this.fillEnrollments();
+    this.enrollmentsService.enrollmentsUpdated$.subscribe(
+      ()=> this.fillEnrollments()
+    );
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (!!changes['courseId']?.isFirstChange()) {
@@ -39,6 +42,7 @@ export class EnrollmentsComponent implements OnDestroy, OnChanges {
 
   fillEnrollments() {
     this.enrollments$ = this.enrollmentsService.enrollments$.pipe(
+      shareReplay(),
       takeUntil(this.unsubscribe),
       map((es: Enrollment[]) => es.filter((e) => e.courseId == this.courseId))
     );
@@ -59,7 +63,7 @@ export class EnrollmentsComponent implements OnDestroy, OnChanges {
     this.unsubscribe.complete();
   }
 
-  openEnrollStudentsModal(students: Student[]){
+  openEnrollStudentsModal(enrollments: Enrollment[], students: Student[]){
     const studentsIds= students.map(s=>s.id);
     this.dialog.open(EnrollStudentModalComponent, {
       disableClose: true,
@@ -67,7 +71,13 @@ export class EnrollmentsComponent implements OnDestroy, OnChanges {
       width: '70%'
     })
     .afterClosed().subscribe((es:Enrollment[])=>{
-        this.enrollmentsService.addEnrollments(...es || []);
+        if(es?.length>0)
+        this.enrollmentsService.addEnrollments(...es || []).subscribe({
+          next: ()=>{},
+          error: (err:any)=>{
+            console.error(err)
+          }
+        });
     });
   }
 }
