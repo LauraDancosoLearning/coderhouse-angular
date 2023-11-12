@@ -33,6 +33,9 @@ export class ErrorFormService {
       case 'loginError':
         message = 'Invalid email or password. Try again!'
         break;
+      case 'invalidDateRange':
+        message = "End date must be greater than start date"
+        break;
       default:
         message = 'Invalid field';
         break;

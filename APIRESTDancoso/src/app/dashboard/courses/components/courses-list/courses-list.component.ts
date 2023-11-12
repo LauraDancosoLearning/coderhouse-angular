@@ -43,8 +43,25 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     this.dialog.open(AddEditCourseModalComponent, {data: course, disableClose: true})
     .afterClosed().subscribe(c=>{
       if(!!c){
-        this.coursesService.updateCourse(c);
+        this.coursesService.updateCourse(c).subscribe(
+          {
+            next: ()=>{},
+            error: (err)=> {
+              
+            },
+          });
       }
     });
+  }
+
+  deleteCourse(id: number){
+    this.coursesService.deleteCourse(id).subscribe(
+      {
+        next: ()=>{},
+        error: (err)=> {
+          
+        },
+      }
+    )
   }
 }

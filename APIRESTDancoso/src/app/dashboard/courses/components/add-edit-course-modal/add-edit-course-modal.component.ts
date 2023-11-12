@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Course } from '../../models/course.model';
 import { ErrorFormService } from 'src/app/shared/services/errorForm.service';
+import { dateRangeValidator } from 'src/app/shared/validators/dateRangeValidator';
 
 @Component({
   selector: 'app-add-edit-course-modal',
@@ -25,7 +26,7 @@ export class AddEditCourseModalComponent {
       description: formBuilder.control(null, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]),
       startDate: formBuilder.control(null, [Validators.required]),
       endDate: formBuilder.control(null, [Validators.required]),
-    });
+    }, {validators: dateRangeValidator()});
 
     if (this.course) {
       this.form.patchValue(this.course);

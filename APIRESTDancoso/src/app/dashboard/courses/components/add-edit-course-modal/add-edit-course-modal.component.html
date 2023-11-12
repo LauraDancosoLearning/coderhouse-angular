@@ -35,6 +35,11 @@
                 <mat-datepicker #endDatePicker></mat-datepicker>
             </mat-form-field>
         </div>
+        <div class="row">
+            <mat-error class="col" *ngFor="let error of form?.errors | keyvalue">
+                {{ errorFormService.getErrorMessage(error.key, error.value) }}
+            </mat-error>
+        </div>
     </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
