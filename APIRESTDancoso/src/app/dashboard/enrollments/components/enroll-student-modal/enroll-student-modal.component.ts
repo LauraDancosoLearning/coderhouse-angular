@@ -37,8 +37,7 @@ export class EnrollStudentModalComponent implements OnDestroy{
     public studentsService: StudentsService,
     @Inject(MAT_DIALOG_DATA) public data: {enrolledStudentsIds?: number[], courseId?:number}
   ) {
-    this.studentsService.students$
-    .pipe(takeUntil(this.unsubscribe))
+    this.studentsService.students$?.pipe(takeUntil(this.unsubscribe))
     .subscribe(s=>{
       this.allstudents = s;
       this.allstudentsIds = s?.map(s=>s.id ?? 0) ?? []

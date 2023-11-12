@@ -17,7 +17,12 @@ export class StudentsComponent {
     })
     .afterClosed().subscribe(s=>{
       if(!!s){
-        this.studentsService.addStudent(s);
+        this.studentsService.addStudent(s).subscribe({
+          next: ()=>{},
+          error: (err)=>{
+
+          }
+        });
       }
     });
   }

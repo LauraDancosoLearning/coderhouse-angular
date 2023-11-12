@@ -43,8 +43,25 @@ export class StudentsListComponent implements OnDestroy, OnInit {
     this.dialog.open(AddEditStudentModalComponent, {data: student, disableClose: true})
     .afterClosed().subscribe(s=>{
       if(!!s){
-        this.studentsService.updateStudent(s);
+        this.studentsService.updateStudent(s).subscribe(
+          {
+            next: ()=>{},
+            error: (err)=> {
+              
+            },
+          })
       }
     });
+  }
+
+  deleteStudent(id: number){
+    this.studentsService.deleteStudent(id).subscribe(
+      {
+        next: ()=>{},
+        error: (err)=> {
+          
+        },
+      }
+    )
   }
 }

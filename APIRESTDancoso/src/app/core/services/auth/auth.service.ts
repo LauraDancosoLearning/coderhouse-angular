@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, map, of } from 'rxjs';
 import { User } from 'src/app/dashboard/users/models/user.model';
 import { RolType } from '../../../dashboard/users/models/rol.enum';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment.local';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'

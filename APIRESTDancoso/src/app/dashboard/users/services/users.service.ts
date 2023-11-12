@@ -2,7 +2,8 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { User } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment.local';
+import { environment } from 'src/environments/environment';
+
 
 @Injectable({
   providedIn: 'root'

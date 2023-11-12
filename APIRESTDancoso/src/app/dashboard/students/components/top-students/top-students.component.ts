@@ -15,10 +15,12 @@ export class TopStudentsComponent implements OnDestroy, OnChanges {
 
   unsubscribe: Subject<void> = new Subject();
 
-  public topStudentsName$!: Observable<string[]>;
+  public topStudentsName$?: Observable<string[]>;
 
   constructor(private studentsService: StudentsService) {
-    this.initStudentsList();
+    this.studentsService.studentsUpdated$.subscribe(
+      ()=> this.initStudentsList()
+    )
   }
   
   ngOnDestroy(): void {
@@ -27,7 +29,7 @@ export class TopStudentsComponent implements OnDestroy, OnChanges {
   }
 
   initStudentsList(){
-    this.topStudentsName$ = this.studentsService.students$.pipe(
+    this.topStudentsName$ = this.studentsService.students$?.pipe(
       takeUntil(this.unsubscribe),
       map((students) => {
         let studentsWithAvg = students

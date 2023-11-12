@@ -22,7 +22,7 @@
         <button matTooltip="edit" mat-icon-button color="primary" (click)="openEditStudentModal(student)" class="mx-1">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button matTooltip="delete" color="warn" class="mx-1" (click)="this.studentsService.deleteStudent(student.id)">
+        <button mat-icon-button matTooltip="delete" color="warn" class="mx-1" (click)="deleteStudent(student.id)">
           <mat-icon>delete</mat-icon>
         </button>
       </td>

@@ -1,47 +1,49 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable, shareReplay, tap, BehaviorSubject } from 'rxjs';
 import { Student } from '../models/student.model';
-import { STUDENTS_MOCKED } from '../../../data/mockData';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentsService {
 
-  private studentsList: Student[] = [];
   private studentsUpdated: EventEmitter<void> = new EventEmitter();
   public studentsUpdated$: Observable<void> = this.studentsUpdated.asObservable();
-  
-  private students: BehaviorSubject<Student[]>;
-  public students$:Observable<Student[]> ;
+  public students$!:Observable<Student[]>;
 
-  constructor(){
-    
-    this.students = new BehaviorSubject<Student[]>(this.studentsList);
-    this.students$ = this.students.asObservable();
+  constructor(private httpClient: HttpClient){
+    this.getStudents();
+  }
+
+  getStudents(){
+    this.students$ = this.httpClient.get<Student[]>(`${environment.baseUrl}/students`).pipe(shareReplay(),
+    tap(()=>this.studentsUpdated.emit())
+    )
   }
 
   addStudent(student: Student){
-    this.studentsList.push({...student, id: new Date().getTime()});
-    this.students.next(this.studentsList);
-    this.studentsUpdated.emit();
+    return this.httpClient.post(`${environment.baseUrl}/students`, student).pipe(
+      tap(() => {
+        this.getStudents();
+        this.studentsUpdated.emit();
+      })
+    );
   }
 
   deleteStudent(id: number){
-    this.studentsList = this.studentsList.filter(s=>s.id !== id);    
-    this.students.next(this.studentsList);
-    this.studentsUpdated.emit();
+    return this.httpClient.delete(`${environment.baseUrl}/students/${id}`).pipe(tap(() => {
+      this.getStudents();
+      this.studentsUpdated.emit();
+    }))
   }
   
   updateStudent(studentToUpdate: Student){
-    let student = this.studentsList.find(s=> s.id === studentToUpdate.id);
-    
-    const studentIndex = this.studentsList.findIndex((s=> s.id === studentToUpdate.id));
-    if(studentIndex != -1){
-      this.studentsList[studentIndex] = { ...student, ...studentToUpdate};
-      this.students.next(this.studentsList);
+    return this.httpClient.put(`${environment.baseUrl}/students/${studentToUpdate.id}`, studentToUpdate).pipe(tap(() => {
+      this.getStudents();
       this.studentsUpdated.emit();
-    }
+    }))
   }
 
   getMarksAvg(marks: number[]){

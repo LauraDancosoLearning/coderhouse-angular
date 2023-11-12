@@ -18,12 +18,12 @@ export class UsersComponent {
     })
     .afterClosed().subscribe(s=>{
       if(!!s){
-        this.usersService.addUser(s).subscribe(
-          ()=>{},
-          (err)=>{
+        this.usersService.addUser(s).subscribe({
+          next: ()=>{},
+          error: (err)=>{
 
           }
-        );
+        });
       }
     });
   }
