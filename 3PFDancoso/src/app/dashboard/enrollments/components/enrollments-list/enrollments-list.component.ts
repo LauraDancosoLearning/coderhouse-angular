@@ -1,6 +1,6 @@
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { Subject } from 'rxjs';
 import { Student } from 'src/app/dashboard/students/models/student.model';
@@ -11,7 +11,7 @@ import { EnrollmentsService } from '../../services/enrollments.service';
   templateUrl: './enrollments-list.component.html',
   styleUrls: ['./enrollments-list.component.scss']
 })
-export class EnrollmentsListComponent implements OnDestroy, OnInit{
+export class EnrollmentsListComponent implements OnDestroy, OnInit, OnChanges{
   @Input() students: Student[] = [];
   @Input() courseId: number = 0;
 
@@ -21,6 +21,11 @@ export class EnrollmentsListComponent implements OnDestroy, OnInit{
   @ViewChild(MatTable) public table?: MatTable<Student>;
 
   constructor(public enrollmentsService:EnrollmentsService){}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['students']) this.renderTable();
+  }
+
   ngOnInit() {
     registerLocaleData(es);
   }
@@ -35,7 +40,7 @@ export class EnrollmentsListComponent implements OnDestroy, OnInit{
   }
 
   unenrrolStudent(studentId:number){
-    this.enrollmentsService.unenroll(this.courseId, studentId).subscribe(
+    this.enrollmentsService.unenroll(this.courseId, studentId)?.subscribe(
       {
         next: ()=>{
           this.enrollmentsService.getEnrollments();

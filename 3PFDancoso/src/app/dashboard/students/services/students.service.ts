@@ -21,6 +21,7 @@ export class StudentsService {
     this.students$ = this.httpClient.get<Student[]>(`${environment.baseUrl}/students`).pipe(shareReplay(),
     tap(()=>this.studentsUpdated.emit())
     )
+    return this.students$;
   }
 
   addStudent(student: Student){

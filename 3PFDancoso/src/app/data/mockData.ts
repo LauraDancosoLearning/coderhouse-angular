@@ -32,7 +32,7 @@ export const STUDENTS_MOCKED: Student[] = [
     name: 'juan',
     lastName: 'ramirez',
     dni: 32873297,
-    email: 'ljdfa@gmail.com',
+    email: 'juan@gmail.com',
     marks: [9],
   },
   {
@@ -40,7 +40,7 @@ export const STUDENTS_MOCKED: Student[] = [
     name: 'pepe',
     lastName: 'ramirez',
     dni: 32873297,
-    email: 'ljdfa@gmail.com',
+    email: 'pepe@gmail.com',
     marks: [10, 8],
   },
   {
@@ -48,7 +48,7 @@ export const STUDENTS_MOCKED: Student[] = [
     name: 'martin',
     lastName: 'ramirez',
     dni: 32873297,
-    email: 'ljdfa@gmail.com',
+    email: 'martin@gmail.com',
     marks: [5],
   },
   {
@@ -56,7 +56,7 @@ export const STUDENTS_MOCKED: Student[] = [
     name: 'carlos',
     lastName: 'ramirez',
     dni: 32873297,
-    email: 'ljdfa@gmail.com',
+    email: 'carlos@gmail.com',
     marks: [10],
   },
 ];

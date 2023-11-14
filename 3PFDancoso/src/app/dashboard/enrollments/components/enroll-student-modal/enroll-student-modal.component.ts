@@ -70,7 +70,6 @@ export class EnrollStudentModalComponent implements OnDestroy{
   }
 
   remove(student: string): void {
-    console.log("remove", student)
     if(this.studentsIdsForm.value) this.studentsIdsForm.setValue(this.studentsIdsForm.value?.filter((f:any)=>f!=student));
     this.studentCtrl.setValue(null);
   }

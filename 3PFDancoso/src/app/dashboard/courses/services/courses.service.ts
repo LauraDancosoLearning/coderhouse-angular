@@ -14,7 +14,6 @@ export class CoursesService {
   private coursesUpdated: EventEmitter<void> = new EventEmitter();
   public coursesUpdated$: Observable<void> = this.coursesUpdated.asObservable();
   
-  // private courses: BehaviorSubject<Course[]>;
   public courses$!:Observable<Course[]>;
 
   constructor(
