@@ -10,10 +10,10 @@ import { RolType } from 'src/app/dashboard/users/models/rol.enum';
 })
 export class SidebarComponent {
   routes: {link: string, name:string, roles: RolType[]} [] = ROUTER_LINKS;
+    
   constructor(public authService: AuthService){
   }
 
-  getRoutes(){
-    return this.routes.filter(r=> this.authService.userHasAnyRol(r.roles));
-  }
+
+  ///TODO: solo las rutas que tiene permitidas el user deben ir... 
 }
