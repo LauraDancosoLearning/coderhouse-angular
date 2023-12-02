@@ -6,7 +6,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Enrollment } from '../../models/enrollment.model';
-import { Observable, Subject, map, mergeMap, takeUntil, shareReplay } from 'rxjs';
+import { Observable, Subject, map, mergeMap, takeUntil, shareReplay, tap } from 'rxjs';
 import { EnrollmentsService } from '../../services/enrollments.service';
 import { Student } from 'src/app/dashboard/students/models/student.model';
 import { StudentsService } from 'src/app/dashboard/students/services/students.service';
@@ -29,11 +29,9 @@ export class EnrollmentsComponent implements OnDestroy, OnChanges {
     private studentsService: StudentsService,
     public dialog: MatDialog,
   ) {
-    this.fillEnrollments();
-    this.enrollmentsService.enrollmentsUpdated$.subscribe(
-      ()=> this.fillEnrollments()
-    );
+    this.enrollmentsService.enrollmentsUpdated$.subscribe(()=>this.fillEnrollments())
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (!!changes['courseId']?.isFirstChange()) {
       this.fillEnrollments();
@@ -41,10 +39,9 @@ export class EnrollmentsComponent implements OnDestroy, OnChanges {
   }
 
   fillEnrollments() {
-    this.enrollments$ = this.enrollmentsService.enrollments$.pipe(
+    this.enrollments$ = this.enrollmentsService.getEnrollmentsByCourseId(this.courseId).pipe(
       shareReplay(),
-      takeUntil(this.unsubscribe),
-      map((es: Enrollment[]) => es.filter((e) => e.courseId == this.courseId))
+      takeUntil(this.unsubscribe)
     );
 
     this.enrolledStudents$ = this.enrollments$.pipe(
@@ -73,7 +70,8 @@ export class EnrollmentsComponent implements OnDestroy, OnChanges {
     .afterClosed().subscribe((es:Enrollment[])=>{
         if(es?.length>0)
         this.enrollmentsService.addEnrollments(...es || []).subscribe({
-          next: ()=>{},
+          next: ()=>{
+          },
           error: (err:any)=>{
             console.error(err)
           }

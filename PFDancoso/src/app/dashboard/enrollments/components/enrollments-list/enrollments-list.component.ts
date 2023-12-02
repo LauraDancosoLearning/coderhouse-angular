@@ -23,7 +23,6 @@ export class EnrollmentsListComponent implements OnDestroy, OnInit, OnChanges{
   constructor(public enrollmentsService:EnrollmentsService){}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes['students']) this.renderTable();
   }
 
   ngOnInit() {
@@ -35,16 +34,10 @@ export class EnrollmentsListComponent implements OnDestroy, OnInit, OnChanges{
     this.unsubscribe.complete();
   }
 
-  renderTable(){
-    this.table?.renderRows();
-  }
-
   unenrrolStudent(studentId:number){
     this.enrollmentsService.unenroll(this.courseId, studentId)?.subscribe(
       {
         next: ()=>{
-          this.enrollmentsService.getEnrollments();
-          this.renderTable();
         },
         error: (err)=> {
           console.error(err)
