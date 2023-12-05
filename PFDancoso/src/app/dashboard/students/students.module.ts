@@ -19,6 +19,10 @@ import { StudentsComponent } from './components/students/students.component';
 import { TopStudentsComponent } from './components/top-students/top-students.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { EffectsModule } from '@ngrx/effects';
+import { StudentsEffects } from './store/students.effects';
+import { StoreModule } from '@ngrx/store';
+import { studentsFeature } from './store/students.reducer';
 
 @NgModule({
   declarations: [StudentsListComponent, AddEditStudentModalComponent, StudentsComponent, TopStudentsComponent],
@@ -36,7 +40,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatInputModule,
     MatTableModule,
     MatMenuModule,
-    MatTooltipModule
+    MatTooltipModule,
+    StoreModule.forFeature(studentsFeature),
+    EffectsModule.forFeature([StudentsEffects]),
   ],
   exports: [StudentsListComponent, AddEditStudentModalComponent, StudentsComponent],
 })

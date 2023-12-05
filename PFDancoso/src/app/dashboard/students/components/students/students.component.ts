@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditStudentModalComponent } from '../add-edit-student-modal/add-edit-student-modal.component';
 import { StudentsService } from '../../services/students.service';
+import { Store } from '@ngrx/store';
+import { StudentsActions } from '../../store/students.actions';
 @Component({
   selector: 'app-students',
   templateUrl: './students.component.html',
@@ -9,7 +11,7 @@ import { StudentsService } from '../../services/students.service';
 })
 export class StudentsComponent {
   constructor(public dialog: MatDialog,
-    private studentsService: StudentsService) {}
+    private store: Store) {}
   
   openAddStudentModal() {
     this.dialog.open(AddEditStudentModalComponent, {
@@ -17,12 +19,7 @@ export class StudentsComponent {
     })
     .afterClosed().subscribe(s=>{
       if(!!s){
-        this.studentsService.addStudent(s).subscribe({
-          next: ()=>{},
-          error: (err)=>{
-
-          }
-        });
+        this.store.dispatch(StudentsActions.addStudent({student: s}));
       }
     });
   }

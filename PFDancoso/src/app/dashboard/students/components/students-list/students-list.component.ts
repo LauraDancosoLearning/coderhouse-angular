@@ -4,10 +4,13 @@ import { StudentsService } from '../../services/students.service';
 import {MatTable} from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditStudentModalComponent } from '../add-edit-student-modal/add-edit-student-modal.component';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { Student } from '../../models/student.model';
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
+import { Store } from '@ngrx/store';
+import { StudentsActions } from '../../store/students.actions';
+import { selectStudents } from '../../store/students.selectors';
 
 @Component({
   selector: 'students-list',
@@ -21,13 +24,13 @@ export class StudentsListComponent implements OnDestroy, OnInit {
 
   displayedColumns: string[] = ['fullName', 'email','dni', 'marks','actions'];
   unsubscribe: Subject<void> = new Subject();
-  
+  students$: Observable<Student[]>;
+
   @ViewChild(MatTable) public table?: MatTable<Student>;
 
-  constructor(public studentsService: StudentsService, public dialog: MatDialog){
-    this.studentsService.studentsUpdated$
-    .pipe(takeUntil(this.unsubscribe))
-    .subscribe(()=>this.renderTable())
+  constructor(public studentsService: StudentsService, private store: Store, public dialog: MatDialog){
+    this.loadStudents();
+    this.students$ = this.store.select(selectStudents);
   }
 
   ngOnDestroy(): void {
@@ -35,33 +38,21 @@ export class StudentsListComponent implements OnDestroy, OnInit {
     this.unsubscribe.complete();
   }
 
-  renderTable(){
-    this.table?.renderRows();
-  }
-
   openEditStudentModal(student: Student) {
     this.dialog.open(AddEditStudentModalComponent, {data: student, disableClose: true})
     .afterClosed().subscribe(s=>{
       if(!!s){
-        this.studentsService.updateStudent(s).subscribe(
-          {
-            next: ()=>{},
-            error: (err)=> {
-              
-            },
-          })
+        this.store.dispatch(StudentsActions.updateStudent({student: s}))
       }
     });
   }
 
   deleteStudent(id: number){
-    this.studentsService.deleteStudent(id).subscribe(
-      {
-        next: ()=>{},
-        error: (err)=> {
-          
-        },
-      }
-    )
+    this.store.dispatch(StudentsActions.deleteStudent({studentId: id}));
+  }
+
+  
+  loadStudents(){
+    this.store.dispatch(StudentsActions.loadStudents());
   }
 }

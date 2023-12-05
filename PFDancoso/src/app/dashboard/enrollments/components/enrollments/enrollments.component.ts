@@ -48,7 +48,7 @@ export class EnrollmentsComponent implements OnDestroy, OnChanges {
       takeUntil(this.unsubscribe),
       map((enrollments) => enrollments.map((e) => e.studentId)),
       mergeMap((ids) =>
-        this.studentsService.students$.pipe(
+        this.studentsService.getStudents().pipe(
           map((students) => students.filter((s) => ids.includes(s.id ?? 0)))
         )
       )

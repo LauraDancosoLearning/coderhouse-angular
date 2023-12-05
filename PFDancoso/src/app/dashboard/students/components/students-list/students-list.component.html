@@ -1,4 +1,4 @@
-<ng-container  *ngIf="(studentsService.students$ | async) as students">
+<ng-container  *ngIf="(students$ | async) as students">
   <table mat-table [dataSource]="students" *ngIf="students.length >0; else noStudentsLoaded">
     <ng-container matColumnDef="fullName">
       <th mat-header-cell *matHeaderCellDef>FullName</th>

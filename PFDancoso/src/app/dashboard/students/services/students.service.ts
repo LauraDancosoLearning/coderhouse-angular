@@ -9,42 +9,23 @@ import { environment } from 'src/environments/environment';
 })
 export class StudentsService {
 
-  private studentsUpdated: EventEmitter<void> = new EventEmitter();
-  public studentsUpdated$: Observable<void> = this.studentsUpdated.asObservable();
-  public students$!:Observable<Student[]>;
-
   constructor(private httpClient: HttpClient){
-    this.getStudents();
   }
 
   getStudents(){
-    this.students$ = this.httpClient.get<Student[]>(`${environment.baseUrl}/students`).pipe(shareReplay(),
-    tap(()=>this.studentsUpdated.emit())
-    )
-    return this.students$;
+    return this.httpClient.get<Student[]>(`${environment.baseUrl}/students`).pipe(shareReplay());
   }
 
   addStudent(student: Student){
-    return this.httpClient.post(`${environment.baseUrl}/students`, student).pipe(
-      tap(() => {
-        this.getStudents();
-        this.studentsUpdated.emit();
-      })
-    );
+    return this.httpClient.post(`${environment.baseUrl}/students`, student);
   }
 
   deleteStudent(id: number){
-    return this.httpClient.delete(`${environment.baseUrl}/students/${id}`).pipe(tap(() => {
-      this.getStudents();
-      this.studentsUpdated.emit();
-    }))
+    return this.httpClient.delete(`${environment.baseUrl}/students/${id}`)
   }
   
   updateStudent(studentToUpdate: Student){
-    return this.httpClient.patch(`${environment.baseUrl}/students/${studentToUpdate.id}`, studentToUpdate).pipe(tap(() => {
-      this.getStudents();
-      this.studentsUpdated.emit();
-    }))
+    return this.httpClient.patch(`${environment.baseUrl}/students/${studentToUpdate.id}`, studentToUpdate)
   }
 
   getMarksAvg(marks: number[]){
