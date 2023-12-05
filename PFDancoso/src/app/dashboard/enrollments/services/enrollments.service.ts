@@ -51,6 +51,6 @@ export class EnrollmentsService {
   }
 
   updateEnrollment(enrollmentToUpdate: Enrollment) {
-    return this.httpClient.put(`${environment.baseUrl}/enrollments/${enrollmentToUpdate.id}`, enrollmentToUpdate).pipe(tap(()=>this.enrollmentsUpdated.emit()));
+    return this.httpClient.patch(`${environment.baseUrl}/enrollments/${enrollmentToUpdate.id}`, enrollmentToUpdate).pipe(tap(()=>this.enrollmentsUpdated.emit()));
   }
 }

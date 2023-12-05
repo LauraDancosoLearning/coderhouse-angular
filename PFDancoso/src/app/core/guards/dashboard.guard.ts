@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
-import { map, tap } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
 import { UrlService } from '../services/url/url.service';
 
 export const dashboardGuard: CanActivateFn = (route, state) => {
@@ -10,5 +10,7 @@ export const dashboardGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const urlService = inject(UrlService);
   urlService.previousDashboardGuardUrl.next(state.url);
-    return authService.userAuthenticated().pipe(map(userAuthenticated=> userAuthenticated ? true : router.createUrlTree(['/auth'] )));
+    return authService.userAuthenticated().pipe(map(userAuthenticated=> userAuthenticated ? true : router.createUrlTree(['/auth'] )), catchError((err)=> {
+      return of(router.createUrlTree(['/auth']));
+    }));
 };

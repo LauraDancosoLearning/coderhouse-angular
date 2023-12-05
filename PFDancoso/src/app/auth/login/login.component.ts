@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { UrlService } from 'src/app/core/services/url/url.service';
 import { ErrorFormService } from 'src/app/shared/services/errorForm.service';
 import { gmailValidator } from 'src/app/shared/validators/gmailValidator';
+import { ErrorHandlerService } from '../../shared/services/error-handler.service';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,8 @@ export class LoginComponent implements OnDestroy {
     private authService: AuthService,
     private urlService: UrlService,
     private router: Router,
-    public errorFormService: ErrorFormService
+    public errorFormService: ErrorFormService,
+    public errorHandleService: ErrorHandlerService
   ) {
     this.form = this.formBuilder.group({
       email: formBuilder.control(null, [
@@ -53,7 +55,8 @@ export class LoginComponent implements OnDestroy {
       .subscribe(
       user => {
         user == null ? this.form.setErrors({ loginError: true }) : this.router.navigate([this.urlService.previousDashboardGuardUrl.value ?? '/'])
-      }
+      },
+      err=> this.errorHandleService.showError()
     );
   }
 }

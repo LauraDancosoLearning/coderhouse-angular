@@ -18,8 +18,11 @@ import { UsersComponent } from './components/users/users.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AddEditUserModalComponent } from './components/add-edit-user-modal/add-edit-user-modal.component';
-import { HttpClientModule } from '@angular/common/http';
 
+import { EffectsModule } from '@ngrx/effects';
+import { UsersEffects } from './store/users.effects';
+import { StoreModule } from '@ngrx/store';
+import { usersFeature } from './store/users.reducer';
 @NgModule({
   declarations: [UsersListComponent, AddEditUserModalComponent, UsersComponent],
   imports: [
@@ -36,7 +39,9 @@ import { HttpClientModule } from '@angular/common/http';
     MatInputModule,
     MatTableModule,
     MatMenuModule,
-    MatTooltipModule
+    MatTooltipModule,
+    StoreModule.forFeature(usersFeature),
+    EffectsModule.forFeature([UsersEffects])
   ],
   exports: [UsersListComponent, AddEditUserModalComponent, UsersComponent],
 })

@@ -6,4 +6,3 @@ export interface User extends IUserBase{
     token: string;
     password: string;
 }
- 

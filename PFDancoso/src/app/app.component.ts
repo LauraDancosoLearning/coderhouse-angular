@@ -1,13 +1,16 @@
-import { registerLocaleData } from '@angular/common';
-import en from '@angular/common/locales/en';
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { ErrorHandlerService } from './shared/services/error-handler.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  
+  constructor(private errorService: ErrorHandlerService){}
+
+  ngOnInit(): void {
+    this.errorService.handleErrors();
+  }
 }

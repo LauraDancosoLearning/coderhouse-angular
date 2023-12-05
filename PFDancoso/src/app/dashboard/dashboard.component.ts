@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ErrorHandlerService } from '../shared/services/error-handler.service';
 
 @Component({
   selector: 'dashboard',

@@ -4,7 +4,7 @@ import { GradeStateDirective } from './directives/grade-state.directive';
 import { FullnamePipe } from './pipes/fullname.pipe';
 import { HeadingTitleDirective } from './directives/heading-title.directive';
 import {MatTooltipModule} from '@angular/material/tooltip';
-
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -20,7 +20,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
   exports: [
     GradeStateDirective,
     FullnamePipe,
-    HeadingTitleDirective,
+    HeadingTitleDirective
   ]
 })
 export class SharedModule { }

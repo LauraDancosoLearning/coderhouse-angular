@@ -47,7 +47,7 @@ export class CoursesService {
   }
   
   updateCourse(courseToUpdate: Course){
-    return this.httpClient.put(`${environment.baseUrl}/courses/${courseToUpdate.id}`, courseToUpdate).pipe(tap(() => {
+    return this.httpClient.patch(`${environment.baseUrl}/courses/${courseToUpdate.id}`, courseToUpdate).pipe(tap(() => {
       this.getCourses();
       this.coursesUpdated.emit();
     }))

@@ -1,4 +1,4 @@
-<ng-container  *ngIf="(usersService.users$ | async) as users">
+<ng-container  *ngIf="((users$ | async) || []) as users">
     <table mat-table [dataSource]="users" *ngIf="users.length >0; else noUsersLoaded">
       <ng-container matColumnDef="fullName">
         <th mat-header-cell *matHeaderCellDef>FullName</th>

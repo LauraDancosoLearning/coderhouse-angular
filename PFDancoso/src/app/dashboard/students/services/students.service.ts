@@ -41,7 +41,7 @@ export class StudentsService {
   }
   
   updateStudent(studentToUpdate: Student){
-    return this.httpClient.put(`${environment.baseUrl}/students/${studentToUpdate.id}`, studentToUpdate).pipe(tap(() => {
+    return this.httpClient.patch(`${environment.baseUrl}/students/${studentToUpdate.id}`, studentToUpdate).pipe(tap(() => {
       this.getStudents();
       this.studentsUpdated.emit();
     }))
