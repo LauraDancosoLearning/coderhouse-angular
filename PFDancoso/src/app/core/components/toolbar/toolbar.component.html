@@ -6,9 +6,12 @@
   </span>
   <span class="fill-remaining-space">{{ title }}</span>
   <span class="spacer"></span>
-  <span class="fill-remaining-space">
-    <button mat-icon-button *ngIf="authService.user$ | async" (click)="logout()">
-      <mat-icon>power_settings_new</mat-icon>
-    </button>
+  <span class="fill-remaining-space d-flex align-items-center">
+    <ng-container *ngIf="authService.user$ | async as user">
+      <span>{{user.name}}</span>
+      <button mat-icon-button (click)="logout()" matTooltip="logout" >
+        <mat-icon>power_settings_new</mat-icon>
+      </button>
+    </ng-container>
   </span>
 </mat-toolbar>

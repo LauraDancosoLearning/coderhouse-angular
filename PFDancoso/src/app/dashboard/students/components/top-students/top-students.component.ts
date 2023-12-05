@@ -9,15 +9,22 @@ import { FullnamePipe } from 'src/app/shared/pipes/fullname.pipe';
   templateUrl: './top-students.component.html',
   styleUrls: ['./top-students.component.scss'],
 })
-export class TopStudentsComponent implements OnDestroy, OnChanges {
+export class TopStudentsComponent implements OnDestroy {
 
-  @Input() public topNumber: number = 3;
+  @Input()
+  get topNumber(): number { return this._topNumber; }
+  set topNumber(number: number) {
+    this._topNumber = number ?? 3;
+    ()=> this.initStudentsList();
+  }
+  private _topNumber: number = 3;
 
   unsubscribe: Subject<void> = new Subject();
 
   public topStudentsName$?: Observable<string[]>;
 
   constructor(private studentsService: StudentsService) {
+    this.initStudentsList();
     this.studentsService.studentsUpdated$.subscribe(
       ()=> this.initStudentsList()
     )
@@ -47,7 +54,4 @@ export class TopStudentsComponent implements OnDestroy, OnChanges {
     );
   }
 
-  ngOnChanges(changes: SimpleChanges){
-    if(changes['topNumber']) this.initStudentsList();
-  }
 }

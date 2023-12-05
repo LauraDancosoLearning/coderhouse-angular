@@ -14,6 +14,7 @@ export class SidebarComponent {
   constructor(public authService: AuthService){
   }
 
-
-  ///TODO: solo las rutas que tiene permitidas el user deben ir... 
+  logout(){
+    this.authService.logout();
+  }
 }
