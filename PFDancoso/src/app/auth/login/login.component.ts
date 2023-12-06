@@ -39,9 +39,6 @@ export class LoginComponent implements OnDestroy {
       password: formBuilder.control(
         null, [Validators.required, Validators.minLength(this.passwordMinMaxLength[0]), Validators.maxLength(this.passwordMinMaxLength[1])])
     });
-
-    //for testing puporses
-    this.form.patchValue({email: 'laura@gmail.com', password: '123456'})
   }
 
   ngOnDestroy(): void {
