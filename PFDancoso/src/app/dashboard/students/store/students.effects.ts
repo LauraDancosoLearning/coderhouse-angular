@@ -45,7 +45,7 @@ export class StudentsEffects {
         .pipe(
           
           map(data => StudentsActions.loadTopStudentsSuccess({ data })),
-          catchError(error => of(ErrorActions.setError( { error : { actionType: StudentsActions.loadStudents.type, message: error?.message ?? '' }}))))      )
+          catchError(error => of(ErrorActions.setError( { error : { actionType: StudentsActions.loadTopStudents.type, message: error?.message ?? '' }}))))      )
     );
   });
 
@@ -56,7 +56,7 @@ export class StudentsEffects {
       concatMap((action) =>
         this.studentsService.addStudent(action.student).pipe(
           map(() => StudentsActions.loadStudents()),
-          catchError(error => of(ErrorActions.setError( { error : { actionType: StudentsActions.loadStudents.type, message: error?.message ?? '' }}))))
+          catchError(error => of(ErrorActions.setError( { error : { actionType: StudentsActions.addStudent.type, message: error?.message ?? '' }}))))
       )
     );
   });
@@ -67,7 +67,7 @@ export class StudentsEffects {
       concatMap((action) =>
         this.studentsService.deleteStudent(action.studentId).pipe(
           map(() => StudentsActions.loadStudents()),
-          catchError(error => of(ErrorActions.setError( { error : { actionType: StudentsActions.loadStudents.type, message: error?.message ?? '' }}))))
+          catchError(error => of(ErrorActions.setError( { error : { actionType: StudentsActions.deleteStudent.type, message: error?.message ?? '' }}))))
       )
     );
   });
@@ -78,7 +78,7 @@ export class StudentsEffects {
       concatMap((action) =>
         this.studentsService.updateStudent(action.student).pipe(
           map(() => StudentsActions.loadStudents()),
-          catchError(error => of(ErrorActions.setError( { error : { actionType: StudentsActions.loadStudents.type, message: error?.message ?? '' }}))))
+          catchError(error => of(ErrorActions.setError( { error : { actionType: StudentsActions.updateStudent.type, message: error?.message ?? '' }}))))
       )
     );
   });

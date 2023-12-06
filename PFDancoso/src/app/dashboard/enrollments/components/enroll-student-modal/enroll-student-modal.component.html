@@ -27,7 +27,7 @@
             #auto="matAutocomplete"
             (optionSelected)="selected($event)"
           >
-            <mat-option *ngFor="let studentId of filteredStudentsIds | async" [value]="getStudent(studentId)">
+            <mat-option *ngFor="let studentId of filteredStudentsIds$ | async" [value]="getStudent(studentId)">
               {{getStudent(studentId) | fullname}}
             </mat-option>
           </mat-autocomplete>

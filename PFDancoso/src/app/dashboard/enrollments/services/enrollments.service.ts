@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Enrollment } from '../models/enrollment.model';
-import { Observable, concat, concatMap, flatMap, forkJoin, map, mergeMap, shareReplay, tap, throwError } from 'rxjs';
+import { Observable, forkJoin, map, mergeMap, tap, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
@@ -8,9 +8,6 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class EnrollmentsService {
-  private enrollmentsUpdated: EventEmitter<void> = new EventEmitter();
-  public enrollmentsUpdated$: Observable<void> = this.enrollmentsUpdated.asObservable();
-
   constructor(private httpClient: HttpClient) {
   }
 
@@ -27,12 +24,11 @@ export class EnrollmentsService {
       (enrollment) =>
       this.httpClient.post(`${environment.baseUrl}/enrollments`, enrollment)
     );
-    return forkJoin(postSubs).pipe(tap(()=>this.enrollmentsUpdated.emit()));
+    return forkJoin(postSubs);
   }
 
   deleteEnrollment(id: number) {
     return this.httpClient.delete(`${environment.baseUrl}/enrollments/${id}`)
-    .pipe(tap(()=>this.enrollmentsUpdated.emit()));
   }
 
   unenroll(courseId: number, studentId?: number) {
@@ -45,12 +41,11 @@ export class EnrollmentsService {
         }else{
           return throwError(() => new Error("Enrollemnt not found"));
         }
-      }),
-      tap(()=>this.enrollmentsUpdated.emit())
+      })
     );
   }
 
   updateEnrollment(enrollmentToUpdate: Enrollment) {
-    return this.httpClient.patch(`${environment.baseUrl}/enrollments/${enrollmentToUpdate.id}`, enrollmentToUpdate).pipe(tap(()=>this.enrollmentsUpdated.emit()));
+    return this.httpClient.patch(`${environment.baseUrl}/enrollments/${enrollmentToUpdate.id}`, enrollmentToUpdate);
   }
 }

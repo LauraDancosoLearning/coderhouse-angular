@@ -12,34 +12,44 @@ import { Student } from 'src/app/dashboard/students/models/student.model';
 import { StudentsService } from 'src/app/dashboard/students/services/students.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EnrollStudentModalComponent } from '../enroll-student-modal/enroll-student-modal.component';
+import { Store } from '@ngrx/store';
+import { Actions, ofType } from '@ngrx/effects';
+import { EnrollmentsActions } from '../../store/enrollments.actions';
+import { selectEnrollments } from '../../store/enrollments.selectors';
+import { Q } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'enrollments',
   templateUrl: './enrollments.component.html',
   styleUrls: ['./enrollments.component.scss'],
 })
-export class EnrollmentsComponent implements OnDestroy, OnChanges {
-  @Input() courseId: number = 0;
+export class EnrollmentsComponent implements OnDestroy {
+  @Input()
+  get courseId(): number { return this._courseId; }
+  set courseId(number: number) {
+    this._courseId = number ?? 0;
+    () => this.loadEnrollments();
+  }
+  private _courseId: number = 0;
+
   enrollments$?: Observable<Enrollment[]>;
   enrolledStudents$?: Observable<Student[]>;
   unsubscribe: Subject<void> = new Subject();
 
   constructor(
-    private enrollmentsService: EnrollmentsService,
     private studentsService: StudentsService,
     public dialog: MatDialog,
+    private store: Store,
+    private actions$: Actions
   ) {
-    this.enrollmentsService.enrollmentsUpdated$.subscribe(()=>this.fillEnrollments())
+    this.loadEnrollments();
+    this.initEnrollments();
+    this.actions$.pipe(ofType(EnrollmentsActions.abmSuccess)).subscribe(()=> this.loadEnrollments());
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (!!changes['courseId']?.isFirstChange()) {
-      this.fillEnrollments();
-    }
-  }
-
-  fillEnrollments() {
-    this.enrollments$ = this.enrollmentsService.getEnrollmentsByCourseId(this.courseId).pipe(
+  initEnrollments() {
+    this.enrollments$ = this.store.select(selectEnrollments)
+    .pipe(
       shareReplay(),
       takeUntil(this.unsubscribe)
     );
@@ -69,13 +79,11 @@ export class EnrollmentsComponent implements OnDestroy, OnChanges {
     })
     .afterClosed().subscribe((es:Enrollment[])=>{
         if(es?.length>0)
-        this.enrollmentsService.addEnrollments(...es || []).subscribe({
-          next: ()=>{
-          },
-          error: (err:any)=>{
-            console.error(err)
-          }
-        });
+          this.store.dispatch(EnrollmentsActions.addEnrollments({ enrollments: es || []}))
     });
+  }
+
+  loadEnrollments(){
+    this.store.dispatch(EnrollmentsActions.loadEnrollments({courseId: this.courseId}));
   }
 }

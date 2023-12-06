@@ -1,8 +1,8 @@
-import { Component, ElementRef, Inject, Input, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, Input, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Observable, Subject, map, startWith, takeUntil, filter } from 'rxjs';
+import { Observable, Subject, map, startWith, takeUntil, filter, of, concatMap } from 'rxjs';
 import { Student } from 'src/app/dashboard/students/models/student.model';
 import { StudentsService } from 'src/app/dashboard/students/services/students.service';
 import { ErrorFormService } from 'src/app/shared/services/errorForm.service';
@@ -21,7 +21,7 @@ export class EnrollStudentModalComponent implements OnDestroy{
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
   studentCtrl: FormControl<string | null | Student> = new FormControl('');
-  filteredStudentsIds: Observable<number[]>;
+  filteredStudentsIds$: Observable<number[]>;
   studentsIdsForm = new FormControl();
   allstudents: Student[] = [];
   allstudentsIds: number[] = [];
@@ -35,23 +35,26 @@ export class EnrollStudentModalComponent implements OnDestroy{
     public formBuilder: FormBuilder,
     private matDialogRef: MatDialogRef<EnrollStudentModalComponent>,
     public studentsService: StudentsService,
+    public cd: ChangeDetectorRef,
     @Inject(MAT_DIALOG_DATA) public data: {enrolledStudentsIds?: number[], courseId?:number}
   ) {
     this.studentsService.getStudents()?.pipe(takeUntil(this.unsubscribe))
     .subscribe(s=>{
       this.allstudents = s;
       this.allstudentsIds = s?.map(s=>s.id ?? 0) ?? []
+      this.studentCtrl.setValue(this.studentCtrl.value);
     })
-    
 
-    this.filteredStudentsIds = this.studentCtrl.valueChanges.pipe(
+    this.filteredStudentsIds$ = this.studentCtrl.valueChanges.pipe(
       startWith(null),
       takeUntil(this.unsubscribe),
-      map((student: string | null| Student) => 
-        student ? this._filter((student as Student)?.name ?? student) : this.allstudents.slice().map(s=>s.id)
-      ),
-      map((students)  =>
-      students.filter((f) =>!this.studentsIdsForm.value?.includes(f)).map((stu)=>stu ?? 0)
+      map((student: string | null| Student) => {
+        return student ? this._filter((student as Student)?.name ?? student) : 
+        this.allstudents.slice().map(s=>s.id)
+      }),
+      map((students) => {
+        return students.filter((f) =>!this.studentsIdsForm.value?.includes(f)).map((stu)=>stu ?? 0)
+      }
       ),
     );
     

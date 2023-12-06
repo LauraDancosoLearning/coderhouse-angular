@@ -13,7 +13,7 @@ export class StudentsService {
   }
 
   getStudents(){
-    return this.httpClient.get<Student[]>(`${environment.baseUrl}/students`).pipe(shareReplay());
+    return this.httpClient.get<Student[]>(`${environment.baseUrl}/students`).pipe(shareReplay(3));
   }
 
   addStudent(student: Student){

@@ -5,6 +5,8 @@ import { MatTable } from '@angular/material/table';
 import { Subject } from 'rxjs';
 import { Student } from 'src/app/dashboard/students/models/student.model';
 import { EnrollmentsService } from '../../services/enrollments.service';
+import { Store } from '@ngrx/store';
+import { EnrollmentsActions } from '../../store/enrollments.actions';
 
 @Component({
   selector: 'enrollments-list',
@@ -20,7 +22,7 @@ export class EnrollmentsListComponent implements OnDestroy, OnInit, OnChanges{
   
   @ViewChild(MatTable) public table?: MatTable<Student>;
 
-  constructor(public enrollmentsService:EnrollmentsService){}
+  constructor(private store: Store){}
 
   ngOnChanges(changes: SimpleChanges): void {
   }
@@ -35,14 +37,7 @@ export class EnrollmentsListComponent implements OnDestroy, OnInit, OnChanges{
   }
 
   unenrrolStudent(studentId:number){
-    this.enrollmentsService.unenroll(this.courseId, studentId)?.subscribe(
-      {
-        next: ()=>{
-        },
-        error: (err)=> {
-          console.error(err)
-        },
-      });
+    this.store.dispatch(EnrollmentsActions.unenroll({ courseId: this.courseId, studentId: studentId}));
   }
 
   removeTooltip(student: Student){

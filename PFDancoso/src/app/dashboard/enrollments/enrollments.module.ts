@@ -14,6 +14,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCardModule } from '@angular/material/card';
 import { EnrollmentsListComponent } from './components/enrollments-list/enrollments-list.component';
 import { MatTableModule } from '@angular/material/table';
+import { EffectsModule } from '@ngrx/effects';
+import { EnrollmentsEffects } from './store/enrollments.effects';
+import { Store, StoreModule } from '@ngrx/store';
+import { enrollmentsFeature } from './store/enrollments.reducer';
 
 
 @NgModule({
@@ -35,7 +39,9 @@ import { MatTableModule } from '@angular/material/table';
     MatCardModule,
     SharedModule,
     MatIconModule,
-    MatTableModule
+    MatTableModule,
+    StoreModule.forFeature(enrollmentsFeature),
+    EffectsModule.forFeature([EnrollmentsEffects])
   ],
   exports: [
     EnrollmentsComponent
