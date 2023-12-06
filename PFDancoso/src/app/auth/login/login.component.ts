@@ -53,10 +53,12 @@ export class LoginComponent implements OnDestroy {
     const { email, password } = this.form.value;
     this.authService.login(email, password)
       .subscribe(
-      user => {
-        user == null ? this.form.setErrors({ loginError: true }) : this.router.navigate([this.urlService.previousDashboardGuardUrl.value ?? '/'])
-      },
-      err=> this.errorHandleService.showError()
+      {
+        next: user => {
+          user == null ? this.form.setErrors({ loginError: true }) : this.router.navigate([this.urlService.previousDashboardGuardUrl.value ?? '/'])
+        },
+        error: err=> this.errorHandleService.showError()
+      }
     );
   }
 }

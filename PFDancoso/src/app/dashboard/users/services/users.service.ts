@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { User } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { RolType } from '../models/rol.enum';
 
 
 @Injectable({
@@ -21,7 +22,7 @@ export class UsersService {
   }
 
   addUser(user: User, admin:boolean = false) {
-    return this.httpClient.post(`${environment.baseUrl}/users`, { ...user, token: new Date().getTime(), password: admin? '123456' : '654321'});
+    return this.httpClient.post(`${environment.baseUrl}/users`, { ...user, roles: [admin ? RolType.Admin : RolType.Default], token: new Date().getTime(), password: admin? '123456' : '654321' });
   }
 
   deleteUser(id: number) {

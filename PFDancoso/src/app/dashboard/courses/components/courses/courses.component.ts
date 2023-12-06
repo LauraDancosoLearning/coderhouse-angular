@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CoursesService } from '../../services/courses.service';
 import { AddEditCourseModalComponent } from '../add-edit-course-modal/add-edit-course-modal.component';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-courses',
@@ -9,7 +10,8 @@ import { AddEditCourseModalComponent } from '../add-edit-course-modal/add-edit-c
 })
 export class CoursesComponent {
   constructor(public dialog: MatDialog,
-    private coursesService: CoursesService) {}
+    private coursesService: CoursesService,
+    public authUser: AuthService ) {}
   
   openAddEditCourseModal() {
     this.dialog.open(AddEditCourseModalComponent, {

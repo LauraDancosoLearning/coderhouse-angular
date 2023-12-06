@@ -11,6 +11,7 @@ import es from '@angular/common/locales/es';
 import { Store } from '@ngrx/store';
 import { StudentsActions } from '../../store/students.actions';
 import { selectStudents } from '../../store/students.selectors';
+import { AuthService } from '../../../../core/services/auth/auth.service';
 
 @Component({
   selector: 'students-list',
@@ -21,16 +22,18 @@ export class StudentsListComponent implements OnDestroy, OnInit {
   ngOnInit() {
     registerLocaleData(es)  ;
   }
-
-  displayedColumns: string[] = ['fullName', 'email','dni', 'marks','actions'];
+  
+  columns = ['fullName', 'email','dni', 'marks','actions'];
+  displayedColumns: string[] = this.columns;
   unsubscribe: Subject<void> = new Subject();
   students$: Observable<Student[]>;
 
   @ViewChild(MatTable) public table?: MatTable<Student>;
 
-  constructor(public studentsService: StudentsService, private store: Store, public dialog: MatDialog){
+  constructor(public studentsService: StudentsService, private store: Store, public dialog: MatDialog, private authService: AuthService){
     this.loadStudents();
     this.students$ = this.store.select(selectStudents);
+    authService.userIsAdmin$.subscribe(userIsAdmin=> this.displayedColumns = userIsAdmin ? this.columns : this.columns.filter(c=>c != 'actions') )
   }
 
   ngOnDestroy(): void {

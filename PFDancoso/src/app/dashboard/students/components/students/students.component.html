@@ -2,7 +2,7 @@
   <h1 headingTitle >Students</h1>
   <div class="d-flex align-items-center gap-3">
     <top-students></top-students>
-    <button matTooltip="Add student" mat-fab color="primary" (click)="openAddStudentModal()">
+    <button *ngIf="authUser.userIsAdmin$ | async"  matTooltip="Add student" mat-fab color="primary" (click)="openAddStudentModal()">
       <mat-icon>add</mat-icon>
     </button>
   </div>

@@ -5,6 +5,10 @@ import { ErrorFormService } from 'src/app/shared/services/errorForm.service';
 import { RandomService } from 'src/app/shared/services/random.service';
 import { User } from '../../models/user.model';
 import { gmailValidator } from 'src/app/shared/validators/gmailValidator';
+import { RolType } from '../../models/rol.enum';
+import { Store } from '@ngrx/store';
+import { selectAuthUser } from 'src/app/store/auth/auth.selectors';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-add-edit-user-modal',
@@ -21,6 +25,7 @@ export class AddEditUserModalComponent {
     public randomService: RandomService,
     public formBuilder: FormBuilder,
     private matDialogRef: MatDialogRef<AddEditUserModalComponent>,
+    private store: Store,
     @Inject(MAT_DIALOG_DATA) public user?: User
   ) {
     this.randomNamePlaceholder = this.randomService.getRandomName();
@@ -54,6 +59,5 @@ export class AddEditUserModalComponent {
   showError(key: string) {
     return !!this.form.get(key)?.errors && this.form.get(key)?.touched;
   }
-
 }
 

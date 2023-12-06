@@ -7,13 +7,14 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Store } from '@ngrx/store';
 import { AuthActions } from 'src/app/store/auth/auth.actions';
-import { selectAuthUser, selectUserRoles } from 'src/app/store/auth/auth.selectors';
+import { selectAuthUser, selectUserIsAdmin, selectUserRoles } from 'src/app/store/auth/auth.selectors';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   public user$: Observable<User | null> = this.store.select(selectAuthUser);
+  public userIsAdmin$:Observable<boolean> = this.store.select(selectUserIsAdmin)
 
   constructor(private router: Router, private httpClient: HttpClient, private store: Store) { }
 
@@ -45,6 +46,10 @@ export class AuthService {
     this.router.navigate(['/']);
   }
 
+  userHasAccess(user: User | null, roles: RolType[]): boolean{
+    return user?.roles?.some(r=> roles.includes(r)) ?? false;
+  }
+
   userHasRol$(rol: RolType): Observable<boolean>{
     return this.user$.pipe(map(u=> u?.roles.includes(rol) ?? false));
   }
@@ -56,7 +61,7 @@ export class AuthService {
         `${environment.baseUrl}/users/${localStorage.getItem('id')}`
       ).pipe(
         map(u=>{
-          const isAuthenticated = u?.token ? u.token === localStorage.getItem('token') : false;
+          const isAuthenticated = u?.token ? u.token == localStorage.getItem('token') : false;
           if(isAuthenticated) this.setUser(u);
           return isAuthenticated;
         })

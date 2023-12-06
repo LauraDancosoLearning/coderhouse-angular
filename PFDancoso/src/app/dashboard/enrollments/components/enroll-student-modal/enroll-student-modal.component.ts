@@ -57,7 +57,6 @@ export class EnrollStudentModalComponent implements OnDestroy{
       }
       ),
     );
-    
     this.studentsIdsForm.setValue(this.data.enrolledStudentsIds);
   }
 

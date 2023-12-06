@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { AddEditCourseModalComponent } from '../add-edit-course-modal/add-edit-course-modal.component';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
   selector: 'courses-list',
@@ -14,13 +15,13 @@ import { AddEditCourseModalComponent } from '../add-edit-course-modal/add-edit-c
   styleUrls: ['./courses-list.component.scss']
 })
 export class CoursesListComponent implements OnInit, OnDestroy {
-
-  displayedColumns: string[] = ['name', 'description','startDate', 'endDate','actions'];
+  columns = ['name', 'description','startDate', 'endDate','actions'];
+  displayedColumns: string[] = this.columns;
   unsubscribe: Subject<void> = new Subject();
   
   @ViewChild(MatTable) public table?: MatTable<Course>;
 
-  constructor(public coursesService: CoursesService, public dialog: MatDialog){
+  constructor(public coursesService: CoursesService, public dialog: MatDialog, public authService: AuthService){
     this.coursesService.coursesUpdated$
     .pipe(takeUntil(this.unsubscribe))
     .subscribe(()=>this.renderTable())

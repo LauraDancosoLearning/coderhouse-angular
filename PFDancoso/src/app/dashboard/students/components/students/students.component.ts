@@ -4,6 +4,7 @@ import { AddEditStudentModalComponent } from '../add-edit-student-modal/add-edit
 import { StudentsService } from '../../services/students.service';
 import { Store } from '@ngrx/store';
 import { StudentsActions } from '../../store/students.actions';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 @Component({
   selector: 'app-students',
   templateUrl: './students.component.html',
@@ -11,7 +12,7 @@ import { StudentsActions } from '../../store/students.actions';
 })
 export class StudentsComponent {
   constructor(public dialog: MatDialog,
-    private store: Store) {}
+    private store: Store, public authUser: AuthService) {}
   
   openAddStudentModal() {
     this.dialog.open(AddEditStudentModalComponent, {
