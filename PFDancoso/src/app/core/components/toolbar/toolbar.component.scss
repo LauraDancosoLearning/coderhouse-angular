@@ -1,3 +1,16 @@
 .spacer{
     flex: 1 1 auto;
 }
+.title-route{
+    font-size: 0.8rem ;
+    display: inline-block;
+}
+.nav-routes{
+    margin: 10px;
+    padding: 10px;
+    background-color: #dddfee3f;
+    color: #3f51b5;
+}
+.active{
+    color: #1027a5;
+}

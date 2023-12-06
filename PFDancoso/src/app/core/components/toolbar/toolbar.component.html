@@ -4,7 +4,14 @@
       <mat-icon>{{ menuOpened ? "menu_open" : "menu" }} </mat-icon>
     </button>
   </span>
-  <span class="fill-remaining-space">{{ title }}</span>
+  <div class="d-flex align-items-center">
+    <span class="fill-remaining-space">{{ title }}</span>
+      <nav aria-label="breadcrumb" class="ml-1 nav-routes d-flex align-items-center">
+        <ol class="breadcrumb m-0 p-0">
+          <li *ngFor="let item of router.url.split('/'), let i = index" class="title-route breadcrumb-item" [ngClass]="{'active' : i == router.url.split('/').length-1}">{{item}}</li>
+        </ol>
+      </nav>
+  </div>
   <span class="spacer"></span>
   <span class="fill-remaining-space d-flex align-items-center">
     <ng-container *ngIf="authService.user$ | async as user">
